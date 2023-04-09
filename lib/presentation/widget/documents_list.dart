@@ -14,14 +14,16 @@ class DocumentsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<DocumentsBloc, DocumentsState>(
       listener: (context, state) {
-        state.mapOrNull(documentAdded: (documents) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Документ успешно добавлен!'),
-              duration: Duration(seconds: 2),
-            ),
-          );
-        });
+        state.mapOrNull(
+          documentAdded: (documents) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Документ успешно добавлен!'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          },
+        );
       },
       builder: (context, state) {
         return state.when(
@@ -83,7 +85,7 @@ class DocumentListItem extends StatelessWidget {
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () => Container(),
-            documentReady: (document) {
+            documentReady: (document, downloadProgressStream) {
               return Row(
                 children: [
                   const Icon(Icons.train),
@@ -97,14 +99,14 @@ class DocumentListItem extends StatelessWidget {
                         if (document.status == DocumentStatus.waitLoading ||
                             document.status == DocumentStatus.error)
                           const DownloadProgressIndicator.notStarted()
-                        else if (document.downloadProgressStream != null)
+                        else if (downloadProgressStream != null)
                           StreamBuilder<double>(
                             builder: (context, AsyncSnapshot<double> snapshot) {
                               return DownloadProgressIndicator(
                                 value: snapshot.data ?? 0,
                               );
                             },
-                            stream: document.downloadProgressStream?.stream,
+                            stream: downloadProgressStream.stream,
                           )
                         else if (document.status == DocumentStatus.loaded)
                           const DownloadProgressIndicator.complete(),

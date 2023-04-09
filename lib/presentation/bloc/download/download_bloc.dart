@@ -33,12 +33,12 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       onCancel: () {},
     );
 
-    var newDocument = event.document.copyWith(
-      downloadProgressStream: progressController,
-      status: DocumentStatus.loading,
-    );
+    var newDocument = event.document.copyWith(status: DocumentStatus.loading);
 
-    emit(DownloadState.documentReady(document: newDocument));
+    emit(DownloadState.documentReady(
+      document: newDocument,
+      downloadProgressStream: progressController,
+    ));
 
     var filePath = await _repository.downloadDocument(
       url: event.document.url,
@@ -46,16 +46,12 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     );
 
     if (filePath == null) {
-      var newDocument = event.document
-          .copyWith(status: DocumentStatus.error, downloadProgressStream: null);
+      var newDocument = event.document.copyWith(status: DocumentStatus.error);
 
       emit(DownloadState.documentReady(document: newDocument));
     } else {
       var docWithFilePath = newDocument.copyWith(
-        status: DocumentStatus.loaded,
-        downloadProgressStream: null,
-        filePath: filePath,
-      );
+          status: DocumentStatus.loaded, filePath: filePath);
 
       _documentsBloc.add(DocumentsEvent.updateDocument(docWithFilePath));
 

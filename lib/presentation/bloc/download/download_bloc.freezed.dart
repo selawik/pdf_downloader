@@ -236,19 +236,27 @@ abstract class _Download implements DownloadEvent {
 /// @nodoc
 mixin _$DownloadState {
   Document get document => throw _privateConstructorUsedError;
+  StreamController<double>? get downloadProgressStream =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Document document) documentReady,
+    required TResult Function(
+            Document document, StreamController<double>? downloadProgressStream)
+        documentReady,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Document document)? documentReady,
+    TResult? Function(Document document,
+            StreamController<double>? downloadProgressStream)?
+        documentReady,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Document document)? documentReady,
+    TResult Function(Document document,
+            StreamController<double>? downloadProgressStream)?
+        documentReady,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -280,7 +288,8 @@ abstract class $DownloadStateCopyWith<$Res> {
           DownloadState value, $Res Function(DownloadState) then) =
       _$DownloadStateCopyWithImpl<$Res, DownloadState>;
   @useResult
-  $Res call({Document document});
+  $Res call(
+      {Document document, StreamController<double>? downloadProgressStream});
 
   $DocumentCopyWith<$Res> get document;
 }
@@ -299,12 +308,17 @@ class _$DownloadStateCopyWithImpl<$Res, $Val extends DownloadState>
   @override
   $Res call({
     Object? document = null,
+    Object? downloadProgressStream = freezed,
   }) {
     return _then(_value.copyWith(
       document: null == document
           ? _value.document
           : document // ignore: cast_nullable_to_non_nullable
               as Document,
+      downloadProgressStream: freezed == downloadProgressStream
+          ? _value.downloadProgressStream
+          : downloadProgressStream // ignore: cast_nullable_to_non_nullable
+              as StreamController<double>?,
     ) as $Val);
   }
 
@@ -325,7 +339,8 @@ abstract class _$$_DocumentReadyCopyWith<$Res>
       __$$_DocumentReadyCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Document document});
+  $Res call(
+      {Document document, StreamController<double>? downloadProgressStream});
 
   @override
   $DocumentCopyWith<$Res> get document;
@@ -343,12 +358,17 @@ class __$$_DocumentReadyCopyWithImpl<$Res>
   @override
   $Res call({
     Object? document = null,
+    Object? downloadProgressStream = freezed,
   }) {
     return _then(_$_DocumentReady(
       document: null == document
           ? _value.document
           : document // ignore: cast_nullable_to_non_nullable
               as Document,
+      downloadProgressStream: freezed == downloadProgressStream
+          ? _value.downloadProgressStream
+          : downloadProgressStream // ignore: cast_nullable_to_non_nullable
+              as StreamController<double>?,
     ));
   }
 }
@@ -356,14 +376,16 @@ class __$$_DocumentReadyCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_DocumentReady implements _DocumentReady {
-  const _$_DocumentReady({required this.document});
+  const _$_DocumentReady({required this.document, this.downloadProgressStream});
 
   @override
   final Document document;
+  @override
+  final StreamController<double>? downloadProgressStream;
 
   @override
   String toString() {
-    return 'DownloadState.documentReady(document: $document)';
+    return 'DownloadState.documentReady(document: $document, downloadProgressStream: $downloadProgressStream)';
   }
 
   @override
@@ -372,11 +394,14 @@ class _$_DocumentReady implements _DocumentReady {
         (other.runtimeType == runtimeType &&
             other is _$_DocumentReady &&
             (identical(other.document, document) ||
-                other.document == document));
+                other.document == document) &&
+            (identical(other.downloadProgressStream, downloadProgressStream) ||
+                other.downloadProgressStream == downloadProgressStream));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, document);
+  int get hashCode =>
+      Object.hash(runtimeType, document, downloadProgressStream);
 
   @JsonKey(ignore: true)
   @override
@@ -387,27 +412,33 @@ class _$_DocumentReady implements _DocumentReady {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Document document) documentReady,
+    required TResult Function(
+            Document document, StreamController<double>? downloadProgressStream)
+        documentReady,
   }) {
-    return documentReady(document);
+    return documentReady(document, downloadProgressStream);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Document document)? documentReady,
+    TResult? Function(Document document,
+            StreamController<double>? downloadProgressStream)?
+        documentReady,
   }) {
-    return documentReady?.call(document);
+    return documentReady?.call(document, downloadProgressStream);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Document document)? documentReady,
+    TResult Function(Document document,
+            StreamController<double>? downloadProgressStream)?
+        documentReady,
     required TResult orElse(),
   }) {
     if (documentReady != null) {
-      return documentReady(document);
+      return documentReady(document, downloadProgressStream);
     }
     return orElse();
   }
@@ -442,11 +473,15 @@ class _$_DocumentReady implements _DocumentReady {
 }
 
 abstract class _DocumentReady implements DownloadState {
-  const factory _DocumentReady({required final Document document}) =
+  const factory _DocumentReady(
+          {required final Document document,
+          final StreamController<double>? downloadProgressStream}) =
       _$_DocumentReady;
 
   @override
   Document get document;
+  @override
+  StreamController<double>? get downloadProgressStream;
   @override
   @JsonKey(ignore: true)
   _$$_DocumentReadyCopyWith<_$_DocumentReady> get copyWith =>

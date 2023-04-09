@@ -12,7 +12,6 @@ class Document with _$Document {
     required String name,
     required String url,
     required DocumentStatus status,
-    StreamController<double>? downloadProgressStream,
     String? filePath,
   }) = _Document;
 }
