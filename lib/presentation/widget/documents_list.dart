@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pdf_downloader/domain/model/document.dart';
 import 'package:pdf_downloader/domain/model/document_status.dart';
 import 'package:pdf_downloader/presentation/bloc/documents_bloc.dart';
+import 'package:pdf_downloader/presentation/widget/download_progress_indicator.dart';
 
 class DocumentsList extends StatelessWidget {
   const DocumentsList({Key? key}) : super(key: key);
@@ -34,25 +36,19 @@ class DocumentsList extends StatelessWidget {
                           Text(item.name),
                           const SizedBox(height: 4),
                           if (item.status == DocumentStatus.waitLoading)
-                            const LinearProgressIndicator(
-                              value: 0,
-                              semanticsLabel: 'Linear progress indicator',
-                            )
+                            const DownloadProgressIndicator.notStarted()
                           else if (item.downloadProgressStream != null)
                             StreamBuilder<double>(
-                              builder: (context, AsyncSnapshot<double> snapshot) {
-                                return LinearProgressIndicator(
+                              builder:
+                                  (context, AsyncSnapshot<double> snapshot) {
+                                return DownloadProgressIndicator(
                                   value: snapshot.data ?? 0,
-                                  semanticsLabel: 'Linear progress indicator',
                                 );
                               },
                               stream: item.downloadProgressStream?.stream,
                             )
                           else if (item.status == DocumentStatus.loaded)
-                            const LinearProgressIndicator(
-                              value: 1,
-                              semanticsLabel: 'Linear progress indicator',
-                            ),
+                            const DownloadProgressIndicator.complete(),
                           const SizedBox(height: 4),
                           Text(item.status.title),
                         ],
@@ -60,11 +56,8 @@ class DocumentsList extends StatelessWidget {
                     ),
                     const SizedBox(width: 16),
                     GestureDetector(
-                      child: const Icon(Icons.pause),
-                      onTap: () {
-                        BlocProvider.of<DocumentsBloc>(context)
-                            .add(DocumentsEvent.download(document: item));
-                      },
+                      onTap: () => onItemButtonTap(context, item),
+                      child: Icon(_getIconDataForDocumentStatus(item.status)),
                     ),
                   ],
                 );
@@ -77,5 +70,25 @@ class DocumentsList extends StatelessWidget {
         );
       },
     );
+  }
+
+  void onItemButtonTap(BuildContext context, Document doc) {
+    if (doc.status == DocumentStatus.waitLoading) {
+      BlocProvider.of<DocumentsBloc>(context).add(
+        DocumentsEvent.download(document: doc),
+      );
+    }
+  }
+
+  IconData _getIconDataForDocumentStatus(DocumentStatus status) {
+    if (status == DocumentStatus.waitLoading) {
+      return Icons.download;
+    }
+
+    if (status == DocumentStatus.loading) {
+      return Icons.pause;
+    }
+
+    return Icons.cloud;
   }
 }
