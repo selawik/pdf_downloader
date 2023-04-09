@@ -40,7 +40,7 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
 
       if (filePath == null) {
         var newDocument = event.document.copyWith(
-            status: DocumentStatus.waitLoading, downloadProgressStream: null);
+            status: DocumentStatus.error, downloadProgressStream: null);
 
         emit(DownloadState.documentReady(document: newDocument));
       } else {

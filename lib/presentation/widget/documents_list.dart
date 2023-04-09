@@ -72,7 +72,8 @@ class DocumentsListView extends StatelessWidget {
                           children: [
                             Text(document.name),
                             const SizedBox(height: 4),
-                            if (document.status == DocumentStatus.waitLoading)
+                            if (document.status == DocumentStatus.waitLoading ||
+                                document.status == DocumentStatus.error)
                               const DownloadProgressIndicator.notStarted()
                             else if (document.downloadProgressStream != null)
                               StreamBuilder<double>(
@@ -113,7 +114,8 @@ class DocumentsListView extends StatelessWidget {
   }
 
   void onItemButtonTap(BuildContext context, Document doc) {
-    if (doc.status == DocumentStatus.waitLoading) {
+    if (doc.status == DocumentStatus.waitLoading ||
+        doc.status == DocumentStatus.error) {
       BlocProvider.of<DownloadBloc>(context).add(
         DownloadEvent.download(document: doc),
       );
@@ -121,7 +123,8 @@ class DocumentsListView extends StatelessWidget {
   }
 
   IconData _getIconDataForDocumentStatus(DocumentStatus status) {
-    if (status == DocumentStatus.waitLoading) {
+    if (status == DocumentStatus.waitLoading ||
+        status == DocumentStatus.error) {
       return Icons.download;
     }
 

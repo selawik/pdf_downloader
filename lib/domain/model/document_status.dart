@@ -1,7 +1,8 @@
 enum DocumentStatus {
   waitLoading,
   loading,
-  loaded;
+  loaded,
+  error;
 
   String get title {
     switch (this) {
@@ -11,6 +12,8 @@ enum DocumentStatus {
         return 'Загружается';
       case DocumentStatus.loaded:
         return 'Файл загружен';
+      case DocumentStatus.error:
+        return 'Ошибка загрузки';
     }
   }
 }
