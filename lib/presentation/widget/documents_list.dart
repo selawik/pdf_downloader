@@ -50,68 +50,82 @@ class DocumentsListView extends StatelessWidget {
       itemCount: documents.length,
       itemBuilder: (context, index) {
         var item = documents[index];
-        var repository = RepositoryProvider.of<DocumentRepositoryImpl>(context);
-        var documentBloc = BlocProvider.of<DocumentsBloc>(context);
 
-        return BlocProvider<DownloadBloc>(
-          create: (context) => DownloadBloc(
-            document: item,
-            repository: repository,
-            documentsBloc: documentBloc,
-          ),
-          child: BlocBuilder<DownloadBloc, DownloadState>(
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () => Container(),
-                documentReady: (document) {
-                  return Row(
-                    children: [
-                      const Icon(Icons.train),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(document.name),
-                            const SizedBox(height: 4),
-                            if (document.status == DocumentStatus.waitLoading ||
-                                document.status == DocumentStatus.error)
-                              const DownloadProgressIndicator.notStarted()
-                            else if (document.downloadProgressStream != null)
-                              StreamBuilder<double>(
-                                builder:
-                                    (context, AsyncSnapshot<double> snapshot) {
-                                  return DownloadProgressIndicator(
-                                    value: snapshot.data ?? 0,
-                                  );
-                                },
-                                stream: document.downloadProgressStream?.stream,
-                              )
-                            else if (document.status == DocumentStatus.loaded)
-                              const DownloadProgressIndicator.complete(),
-                            const SizedBox(height: 4),
-                            Text(document.status.title),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      GestureDetector(
-                        onTap: () => onItemButtonTap(context, document),
-                        child: Icon(
-                          _getIconDataForDocumentStatus(document.status),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
-        );
+        return DocumentListItem(document: item);
       },
       separatorBuilder: (context, index) {
         return const SizedBox(height: 16);
       },
+    );
+  }
+}
+
+class DocumentListItem extends StatelessWidget {
+  final Document document;
+
+  const DocumentListItem({
+    Key? key,
+    required this.document,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var repository = RepositoryProvider.of<DocumentRepositoryImpl>(context);
+    var documentBloc = BlocProvider.of<DocumentsBloc>(context);
+
+    return BlocProvider<DownloadBloc>(
+      create: (context) => DownloadBloc(
+        document: document,
+        repository: repository,
+        documentsBloc: documentBloc,
+      ),
+      child: BlocBuilder<DownloadBloc, DownloadState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () => Container(),
+            documentReady: (document) {
+              return Row(
+                children: [
+                  const Icon(Icons.train),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(document.name),
+                        const SizedBox(height: 4),
+                        if (document.status == DocumentStatus.waitLoading ||
+                            document.status == DocumentStatus.error)
+                          const DownloadProgressIndicator.notStarted()
+                        else if (document.downloadProgressStream != null)
+                          StreamBuilder<double>(
+                            builder: (context, AsyncSnapshot<double> snapshot) {
+                              return DownloadProgressIndicator(
+                                value: snapshot.data ?? 0,
+                              );
+                            },
+                            stream: document.downloadProgressStream?.stream,
+                          )
+                        else if (document.status == DocumentStatus.loaded)
+                          const DownloadProgressIndicator.complete(),
+                        const SizedBox(height: 4),
+                        Text(document.status.title),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  GestureDetector(
+                    onTap: () => onItemButtonTap(context, document),
+                    child: Icon(
+                      _getIconDataForDocumentStatus(document.status),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 
