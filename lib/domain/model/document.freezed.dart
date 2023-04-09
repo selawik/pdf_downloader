@@ -20,7 +20,7 @@ mixin _$Document {
   String get name => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
   DocumentStatus get status => throw _privateConstructorUsedError;
-  StreamController<int>? get downloadProgressStream =>
+  StreamController<double>? get downloadProgressStream =>
       throw _privateConstructorUsedError;
   String? get filePath => throw _privateConstructorUsedError;
 
@@ -39,7 +39,7 @@ abstract class $DocumentCopyWith<$Res> {
       String name,
       String url,
       DocumentStatus status,
-      StreamController<int>? downloadProgressStream,
+      StreamController<double>? downloadProgressStream,
       String? filePath});
 }
 
@@ -83,7 +83,7 @@ class _$DocumentCopyWithImpl<$Res, $Val extends Document>
       downloadProgressStream: freezed == downloadProgressStream
           ? _value.downloadProgressStream
           : downloadProgressStream // ignore: cast_nullable_to_non_nullable
-              as StreamController<int>?,
+              as StreamController<double>?,
       filePath: freezed == filePath
           ? _value.filePath
           : filePath // ignore: cast_nullable_to_non_nullable
@@ -104,7 +104,7 @@ abstract class _$$_DocumentCopyWith<$Res> implements $DocumentCopyWith<$Res> {
       String name,
       String url,
       DocumentStatus status,
-      StreamController<int>? downloadProgressStream,
+      StreamController<double>? downloadProgressStream,
       String? filePath});
 }
 
@@ -146,7 +146,7 @@ class __$$_DocumentCopyWithImpl<$Res>
       downloadProgressStream: freezed == downloadProgressStream
           ? _value.downloadProgressStream
           : downloadProgressStream // ignore: cast_nullable_to_non_nullable
-              as StreamController<int>?,
+              as StreamController<double>?,
       filePath: freezed == filePath
           ? _value.filePath
           : filePath // ignore: cast_nullable_to_non_nullable
@@ -175,7 +175,7 @@ class _$_Document implements _Document {
   @override
   final DocumentStatus status;
   @override
-  final StreamController<int>? downloadProgressStream;
+  final StreamController<double>? downloadProgressStream;
   @override
   final String? filePath;
 
@@ -217,7 +217,7 @@ abstract class _Document implements Document {
       required final String name,
       required final String url,
       required final DocumentStatus status,
-      final StreamController<int>? downloadProgressStream,
+      final StreamController<double>? downloadProgressStream,
       final String? filePath}) = _$_Document;
 
   @override
@@ -229,7 +229,7 @@ abstract class _Document implements Document {
   @override
   DocumentStatus get status;
   @override
-  StreamController<int>? get downloadProgressStream;
+  StreamController<double>? get downloadProgressStream;
   @override
   String? get filePath;
   @override

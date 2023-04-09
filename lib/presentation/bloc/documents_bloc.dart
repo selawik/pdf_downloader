@@ -56,21 +56,25 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
   }
 
   void _onDownloadDocument(_DownloadDocument event, Emitter emit) async {
-    var progressController = StreamController<int>();
+    var progressController = StreamController<double>();
+
+    var indexOfCurrentDocument = documents.indexOf(event.document);
 
     documents.removeWhere(
         (element) => element.documentId == event.document.documentId);
+
+    var documentsBefore = documents.sublist(0, indexOfCurrentDocument);
+    var documentsAfter =
+        documents.sublist(indexOfCurrentDocument, documents.length);
 
     var newDocument = event.document.copyWith(
       downloadProgressStream: progressController,
       status: DocumentStatus.loading,
     );
 
-    emit(
-      DocumentsState.listIsReady(
-        documents: [newDocument] + documents,
-      ),
-    );
+    documents = documentsBefore + [newDocument] + documentsAfter;
+
+    emit(DocumentsState.listIsReady(documents: documents));
 
     var filePath = await _repository.downloadDocument(
       url: event.document.url,
@@ -78,29 +82,21 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
     );
 
     if (filePath == null) {
-      emit(
-        DocumentsState.listIsReady(
-          documents: [
-                newDocument.copyWith(
-                    status: DocumentStatus.waitLoading,
-                    downloadProgressStream: null)
-              ] +
-              documents,
-        ),
-      );
+      var docWithError = newDocument.copyWith(
+          status: DocumentStatus.waitLoading, downloadProgressStream: null);
+
+      documents = documentsBefore + [docWithError] + documentsAfter;
+
+      emit(DocumentsState.listIsReady(documents: documents));
     } else {
-      emit(
-        DocumentsState.listIsReady(
-          documents: [
-                newDocument.copyWith(
-                  status: DocumentStatus.loaded,
-                  downloadProgressStream: null,
-                  filePath: filePath,
-                )
-              ] +
-              documents,
-        ),
+      var docWithFilePath = newDocument.copyWith(
+        status: DocumentStatus.loaded,
+        downloadProgressStream: null,
+        filePath: filePath,
       );
+
+      documents = documentsBefore + [docWithFilePath] + documentsAfter;
+      emit(DocumentsState.listIsReady(documents: documents));
     }
   }
 }

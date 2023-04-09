@@ -14,6 +14,6 @@ abstract class IDocumentRepository {
 
   Future<String?> downloadDocument({
     required String url,
-    required StreamController<int> progressStream,
+    required StreamController<double> progressStream,
   });
 }

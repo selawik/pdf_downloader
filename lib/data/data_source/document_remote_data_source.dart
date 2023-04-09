@@ -4,6 +4,6 @@ abstract class IDocumentRemoteDataSource {
   Future<void> loadDocument({
     required String url,
     required String filePath,
-    required StreamController<int> progressStream,
+    required StreamController<double> progressStream,
   });
 }

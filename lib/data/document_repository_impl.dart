@@ -47,7 +47,7 @@ class DocumentRepositoryImpl implements IDocumentRepository {
   @override
   Future<String?> downloadDocument({
     required String url,
-    required StreamController<int> progressStream,
+    required StreamController<double> progressStream,
   }) async {
     try {
       var filePath = await _getFilePath();
