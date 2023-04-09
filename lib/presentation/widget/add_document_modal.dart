@@ -4,12 +4,6 @@ import 'package:flutter/services.dart';
 class AddDocumentModal extends StatefulWidget {
   const AddDocumentModal({Key? key}) : super(key: key);
 
-
-  static String getClipboardData() {
-    Clipboard.getData('text/plain');
-    return '';
-  }
-
   @override
   State<AddDocumentModal> createState() => _AddDocumentModalState();
 }
