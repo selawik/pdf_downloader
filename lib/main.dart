@@ -20,7 +20,7 @@ void main() {
   runApp(
     RepositoryProvider.value(
       value: repository,
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
