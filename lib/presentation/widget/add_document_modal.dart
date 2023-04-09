@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AddDocumentModal extends StatefulWidget {
-  AddDocumentModal({Key? key}) : super(key: key);
+  const AddDocumentModal({Key? key}) : super(key: key);
 
 
   static String getClipboardData() {

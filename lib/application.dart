@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pdf_downloader/presentation/bloc/documents_bloc.dart';
 import 'package:pdf_downloader/presentation/home_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,7 +15,10 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: BlocProvider<DocumentsBloc>(
+        create: (context) => DocumentsBloc()..add(const DocumentsEvent.loadList()),
+        child: const HomePage(),
+      ),
     );
   }
 }
