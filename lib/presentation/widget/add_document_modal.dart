@@ -1,11 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class AddDocumentModal extends StatelessWidget {
+class AddDocumentModal extends StatefulWidget {
   AddDocumentModal({Key? key}) : super(key: key);
 
+
+  static String getClipboardData() {
+    Clipboard.getData('text/plain');
+    return '';
+  }
+
+  @override
+  State<AddDocumentModal> createState() => _AddDocumentModalState();
+}
+
+class _AddDocumentModalState extends State<AddDocumentModal> {
   final GlobalKey<FormFieldState> fieldKey = GlobalKey();
 
   final TextEditingController urlController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    setUrlFromClipboard();
+  }
+
+  Future<void> setUrlFromClipboard() async {
+    var result = await Clipboard.getData('text/plain');
+
+    if (result?.text != null && result!.text!.endsWith('.pdf')) {
+      urlController.text = result.text!;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +41,7 @@ class AddDocumentModal extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 16),
-          const Text('Добавить документ'),
+          const Text('Добавить билет'),
           const SizedBox(height: 16),
           TextFormField(
             key: fieldKey,
