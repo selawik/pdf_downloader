@@ -16,4 +16,6 @@ abstract class IDocumentRepository {
     required String url,
     required StreamController<double> progressStream,
   });
+
+  Future<bool?> updateDocument({required Document document});
 }

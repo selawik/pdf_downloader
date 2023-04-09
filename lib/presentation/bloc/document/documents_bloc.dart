@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pdf_downloader/domain/document_repository.dart';
 import 'package:pdf_downloader/domain/model/document.dart';
@@ -15,11 +16,13 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
 
   List<Document> documents = [];
 
-  DocumentsBloc({required IDocumentRepository repository})
-      : _repository = repository,
+  DocumentsBloc({
+    required IDocumentRepository repository,
+  })  : _repository = repository,
         super(const DocumentsState.listIsReady(documents: [])) {
     on<_AddDocument>(_onAddDocument);
     on<_LoadList>(_onLoadList);
+    on<_UpdateDocument>(_onUpdateDocument);
   }
 
   void _onAddDocument(_AddDocument event, Emitter emit) async {
@@ -50,5 +53,26 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
       documents = listResponse.toList();
       emit(DocumentsState.listIsReady(documents: listResponse.toList()));
     }
+  }
+
+  void _onUpdateDocument(_UpdateDocument event, Emitter emit) async {
+    var updateResult = await _repository.updateDocument(document: event.document);
+
+    if (updateResult == null) {
+      return;
+    }
+
+    var listResponse = await _repository.loadDocuments();
+
+    if (listResponse != null) {
+      if (listResponse.isEmpty) {
+        emit(const DocumentsState.empty());
+        return;
+      }
+
+      documents = listResponse.toList();
+      emit(DocumentsState.listIsReady(documents: listResponse.toList()));
+    }
+
   }
 }

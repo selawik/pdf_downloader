@@ -38,8 +38,15 @@ class $DocumentTableTable extends DocumentTable
               type: DriftSqlType.int, requiredDuringInsert: true)
           .withConverter<DocumentStatus>(
               $DocumentTableTable.$converterdocumentStatus);
+  static const VerificationMeta _filePathMeta =
+      const VerificationMeta('filePath');
   @override
-  List<GeneratedColumn> get $columns => [documentId, name, url, documentStatus];
+  late final GeneratedColumn<String> filePath = GeneratedColumn<String>(
+      'file_path', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [documentId, name, url, documentStatus, filePath];
   @override
   String get aliasedName => _alias ?? 'document_table';
   @override
@@ -68,6 +75,10 @@ class $DocumentTableTable extends DocumentTable
       context.missing(_urlMeta);
     }
     context.handle(_documentStatusMeta, const VerificationResult.success());
+    if (data.containsKey('file_path')) {
+      context.handle(_filePathMeta,
+          filePath.isAcceptableOrUnknown(data['file_path']!, _filePathMeta));
+    }
     return context;
   }
 
@@ -86,6 +97,8 @@ class $DocumentTableTable extends DocumentTable
       documentStatus: $DocumentTableTable.$converterdocumentStatus.fromSql(
           attachedDatabase.typeMapping.read(
               DriftSqlType.int, data['${effectivePrefix}document_status'])!),
+      filePath: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}file_path']),
     );
   }
 
@@ -104,11 +117,13 @@ class DocumentDbEntity extends DataClass
   final String name;
   final String url;
   final DocumentStatus documentStatus;
+  final String? filePath;
   const DocumentDbEntity(
       {required this.documentId,
       required this.name,
       required this.url,
-      required this.documentStatus});
+      required this.documentStatus,
+      this.filePath});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -119,6 +134,9 @@ class DocumentDbEntity extends DataClass
       final converter = $DocumentTableTable.$converterdocumentStatus;
       map['document_status'] = Variable<int>(converter.toSql(documentStatus));
     }
+    if (!nullToAbsent || filePath != null) {
+      map['file_path'] = Variable<String>(filePath);
+    }
     return map;
   }
 
@@ -128,6 +146,9 @@ class DocumentDbEntity extends DataClass
       name: Value(name),
       url: Value(url),
       documentStatus: Value(documentStatus),
+      filePath: filePath == null && nullToAbsent
+          ? const Value.absent()
+          : Value(filePath),
     );
   }
 
@@ -140,6 +161,7 @@ class DocumentDbEntity extends DataClass
       url: serializer.fromJson<String>(json['url']),
       documentStatus: $DocumentTableTable.$converterdocumentStatus
           .fromJson(serializer.fromJson<int>(json['documentStatus'])),
+      filePath: serializer.fromJson<String?>(json['filePath']),
     );
   }
   @override
@@ -151,6 +173,7 @@ class DocumentDbEntity extends DataClass
       'url': serializer.toJson<String>(url),
       'documentStatus': serializer.toJson<int>(
           $DocumentTableTable.$converterdocumentStatus.toJson(documentStatus)),
+      'filePath': serializer.toJson<String?>(filePath),
     };
   }
 
@@ -158,12 +181,14 @@ class DocumentDbEntity extends DataClass
           {int? documentId,
           String? name,
           String? url,
-          DocumentStatus? documentStatus}) =>
+          DocumentStatus? documentStatus,
+          Value<String?> filePath = const Value.absent()}) =>
       DocumentDbEntity(
         documentId: documentId ?? this.documentId,
         name: name ?? this.name,
         url: url ?? this.url,
         documentStatus: documentStatus ?? this.documentStatus,
+        filePath: filePath.present ? filePath.value : this.filePath,
       );
   @override
   String toString() {
@@ -171,13 +196,15 @@ class DocumentDbEntity extends DataClass
           ..write('documentId: $documentId, ')
           ..write('name: $name, ')
           ..write('url: $url, ')
-          ..write('documentStatus: $documentStatus')
+          ..write('documentStatus: $documentStatus, ')
+          ..write('filePath: $filePath')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(documentId, name, url, documentStatus);
+  int get hashCode =>
+      Object.hash(documentId, name, url, documentStatus, filePath);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -185,7 +212,8 @@ class DocumentDbEntity extends DataClass
           other.documentId == this.documentId &&
           other.name == this.name &&
           other.url == this.url &&
-          other.documentStatus == this.documentStatus);
+          other.documentStatus == this.documentStatus &&
+          other.filePath == this.filePath);
 }
 
 class DocumentTableCompanion extends UpdateCompanion<DocumentDbEntity> {
@@ -193,17 +221,20 @@ class DocumentTableCompanion extends UpdateCompanion<DocumentDbEntity> {
   final Value<String> name;
   final Value<String> url;
   final Value<DocumentStatus> documentStatus;
+  final Value<String?> filePath;
   const DocumentTableCompanion({
     this.documentId = const Value.absent(),
     this.name = const Value.absent(),
     this.url = const Value.absent(),
     this.documentStatus = const Value.absent(),
+    this.filePath = const Value.absent(),
   });
   DocumentTableCompanion.insert({
     this.documentId = const Value.absent(),
     required String name,
     required String url,
     required DocumentStatus documentStatus,
+    this.filePath = const Value.absent(),
   })  : name = Value(name),
         url = Value(url),
         documentStatus = Value(documentStatus);
@@ -212,12 +243,14 @@ class DocumentTableCompanion extends UpdateCompanion<DocumentDbEntity> {
     Expression<String>? name,
     Expression<String>? url,
     Expression<int>? documentStatus,
+    Expression<String>? filePath,
   }) {
     return RawValuesInsertable({
       if (documentId != null) 'document_id': documentId,
       if (name != null) 'name': name,
       if (url != null) 'url': url,
       if (documentStatus != null) 'document_status': documentStatus,
+      if (filePath != null) 'file_path': filePath,
     });
   }
 
@@ -225,12 +258,14 @@ class DocumentTableCompanion extends UpdateCompanion<DocumentDbEntity> {
       {Value<int>? documentId,
       Value<String>? name,
       Value<String>? url,
-      Value<DocumentStatus>? documentStatus}) {
+      Value<DocumentStatus>? documentStatus,
+      Value<String?>? filePath}) {
     return DocumentTableCompanion(
       documentId: documentId ?? this.documentId,
       name: name ?? this.name,
       url: url ?? this.url,
       documentStatus: documentStatus ?? this.documentStatus,
+      filePath: filePath ?? this.filePath,
     );
   }
 
@@ -251,6 +286,9 @@ class DocumentTableCompanion extends UpdateCompanion<DocumentDbEntity> {
       map['document_status'] =
           Variable<int>(converter.toSql(documentStatus.value));
     }
+    if (filePath.present) {
+      map['file_path'] = Variable<String>(filePath.value);
+    }
     return map;
   }
 
@@ -260,7 +298,8 @@ class DocumentTableCompanion extends UpdateCompanion<DocumentDbEntity> {
           ..write('documentId: $documentId, ')
           ..write('name: $name, ')
           ..write('url: $url, ')
-          ..write('documentStatus: $documentStatus')
+          ..write('documentStatus: $documentStatus, ')
+          ..write('filePath: $filePath')
           ..write(')'))
         .toString();
   }

@@ -39,4 +39,9 @@ class DriftDocumentLocalDataSource implements IDocumentsLocalDataSource {
       status: savedDocument.documentStatus,
     );
   }
+
+  @override
+  Future<bool> updateDocument({required Document document}) async {
+    return await _dbProvider.updateDocument(document: document);
+  }
 }

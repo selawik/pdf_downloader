@@ -51,11 +51,13 @@ class DocumentsListView extends StatelessWidget {
       itemBuilder: (context, index) {
         var item = documents[index];
         var repository = RepositoryProvider.of<DocumentRepositoryImpl>(context);
+        var documentBloc = BlocProvider.of<DocumentsBloc>(context);
 
         return BlocProvider<DownloadBloc>(
           create: (context) => DownloadBloc(
             document: item,
             repository: repository,
+            documentsBloc: documentBloc,
           ),
           child: BlocBuilder<DownloadBloc, DownloadState>(
             builder: (context, state) {

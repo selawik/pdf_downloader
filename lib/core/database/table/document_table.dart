@@ -7,4 +7,5 @@ class DocumentTable extends Table {
   TextColumn get name  => text()();
   TextColumn get url  => text()();
   IntColumn get documentStatus => intEnum<DocumentStatus>()();
+  TextColumn get filePath => text().nullable()();
 }

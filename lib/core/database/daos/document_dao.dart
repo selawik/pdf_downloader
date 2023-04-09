@@ -12,6 +12,10 @@ class DocumentDao extends DatabaseAccessor<Database> with _$DocumentDaoMixin {
     return await into(documentTable).insertReturning(document);
   }
 
+  Future<bool> updateDocument(DocumentTableCompanion document) async {
+    return await update(documentTable).replace(document);
+  }
+
   Future<Iterable<DocumentDbEntity>> getDocuments() async {
     return await select(documentTable).get();
   }

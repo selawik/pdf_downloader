@@ -235,43 +235,42 @@ abstract class _Download implements DownloadEvent {
 
 /// @nodoc
 mixin _$DownloadState {
+  Document get document => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() idl,
     required TResult Function(Document document) documentReady,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? idl,
     TResult? Function(Document document)? documentReady,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? idl,
     TResult Function(Document document)? documentReady,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Idl value) idl,
     required TResult Function(_DocumentReady value) documentReady,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Idl value)? idl,
     TResult? Function(_DocumentReady value)? documentReady,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Idl value)? idl,
     TResult Function(_DocumentReady value)? documentReady,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $DownloadStateCopyWith<DownloadState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -280,6 +279,10 @@ abstract class $DownloadStateCopyWith<$Res> {
   factory $DownloadStateCopyWith(
           DownloadState value, $Res Function(DownloadState) then) =
       _$DownloadStateCopyWithImpl<$Res, DownloadState>;
+  @useResult
+  $Res call({Document document});
+
+  $DocumentCopyWith<$Res> get document;
 }
 
 /// @nodoc
@@ -291,116 +294,40 @@ class _$DownloadStateCopyWithImpl<$Res, $Val extends DownloadState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? document = null,
+  }) {
+    return _then(_value.copyWith(
+      document: null == document
+          ? _value.document
+          : document // ignore: cast_nullable_to_non_nullable
+              as Document,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentCopyWith<$Res> get document {
+    return $DocumentCopyWith<$Res>(_value.document, (value) {
+      return _then(_value.copyWith(document: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$_IdlCopyWith<$Res> {
-  factory _$$_IdlCopyWith(_$_Idl value, $Res Function(_$_Idl) then) =
-      __$$_IdlCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_IdlCopyWithImpl<$Res>
-    extends _$DownloadStateCopyWithImpl<$Res, _$_Idl>
-    implements _$$_IdlCopyWith<$Res> {
-  __$$_IdlCopyWithImpl(_$_Idl _value, $Res Function(_$_Idl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_Idl implements _Idl {
-  const _$_Idl();
-
-  @override
-  String toString() {
-    return 'DownloadState.idl()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Idl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() idl,
-    required TResult Function(Document document) documentReady,
-  }) {
-    return idl();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? idl,
-    TResult? Function(Document document)? documentReady,
-  }) {
-    return idl?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? idl,
-    TResult Function(Document document)? documentReady,
-    required TResult orElse(),
-  }) {
-    if (idl != null) {
-      return idl();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Idl value) idl,
-    required TResult Function(_DocumentReady value) documentReady,
-  }) {
-    return idl(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Idl value)? idl,
-    TResult? Function(_DocumentReady value)? documentReady,
-  }) {
-    return idl?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Idl value)? idl,
-    TResult Function(_DocumentReady value)? documentReady,
-    required TResult orElse(),
-  }) {
-    if (idl != null) {
-      return idl(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Idl implements DownloadState {
-  const factory _Idl() = _$_Idl;
-}
-
-/// @nodoc
-abstract class _$$_DocumentReadyCopyWith<$Res> {
+abstract class _$$_DocumentReadyCopyWith<$Res>
+    implements $DownloadStateCopyWith<$Res> {
   factory _$$_DocumentReadyCopyWith(
           _$_DocumentReady value, $Res Function(_$_DocumentReady) then) =
       __$$_DocumentReadyCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({Document document});
 
+  @override
   $DocumentCopyWith<$Res> get document;
 }
 
@@ -423,14 +350,6 @@ class __$$_DocumentReadyCopyWithImpl<$Res>
           : document // ignore: cast_nullable_to_non_nullable
               as Document,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $DocumentCopyWith<$Res> get document {
-    return $DocumentCopyWith<$Res>(_value.document, (value) {
-      return _then(_value.copyWith(document: value));
-    });
   }
 }
 
@@ -468,7 +387,6 @@ class _$_DocumentReady implements _DocumentReady {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() idl,
     required TResult Function(Document document) documentReady,
   }) {
     return documentReady(document);
@@ -477,7 +395,6 @@ class _$_DocumentReady implements _DocumentReady {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? idl,
     TResult? Function(Document document)? documentReady,
   }) {
     return documentReady?.call(document);
@@ -486,7 +403,6 @@ class _$_DocumentReady implements _DocumentReady {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? idl,
     TResult Function(Document document)? documentReady,
     required TResult orElse(),
   }) {
@@ -499,7 +415,6 @@ class _$_DocumentReady implements _DocumentReady {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Idl value) idl,
     required TResult Function(_DocumentReady value) documentReady,
   }) {
     return documentReady(this);
@@ -508,7 +423,6 @@ class _$_DocumentReady implements _DocumentReady {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Idl value)? idl,
     TResult? Function(_DocumentReady value)? documentReady,
   }) {
     return documentReady?.call(this);
@@ -517,7 +431,6 @@ class _$_DocumentReady implements _DocumentReady {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Idl value)? idl,
     TResult Function(_DocumentReady value)? documentReady,
     required TResult orElse(),
   }) {
@@ -532,7 +445,9 @@ abstract class _DocumentReady implements DownloadState {
   const factory _DocumentReady({required final Document document}) =
       _$_DocumentReady;
 
+  @override
   Document get document;
+  @override
   @JsonKey(ignore: true)
   _$$_DocumentReadyCopyWith<_$_DocumentReady> get copyWith =>
       throw _privateConstructorUsedError;

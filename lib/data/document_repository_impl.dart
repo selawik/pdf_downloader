@@ -66,10 +66,22 @@ class DocumentRepositoryImpl implements IDocumentRepository {
   }
 
   Future<String> _getFilePath() async {
-    Directory appDocumentsDirectory = await getApplicationDocumentsDirectory(); // 1
+    Directory appDocumentsDirectory =
+        await getApplicationDocumentsDirectory(); // 1
     String appDocumentsPath = appDocumentsDirectory.path; // 2
-    String filePath = '$appDocumentsPath/tickets/${DateTime.now().microsecondsSinceEpoch}'; // 3
+    String filePath =
+        '$appDocumentsPath/tickets/${DateTime.now().microsecondsSinceEpoch}'; // 3
 
     return filePath;
+  }
+
+  @override
+  Future<bool?> updateDocument({required Document document}) async {
+    try {
+      return await _localDataSource.updateDocument(document: document);
+    } catch (exception, stacktrace) {
+      log(exception.toString(), stackTrace: stacktrace);
+      return null;
+    }
   }
 }

@@ -9,4 +9,6 @@ abstract class IDocumentsLocalDataSource {
     required String name,
     required DocumentStatus status,
   });
+
+  Future<bool> updateDocument({required Document document});
 }

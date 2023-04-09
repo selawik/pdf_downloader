@@ -1,4 +1,6 @@
+import 'package:drift/drift.dart';
 import 'package:pdf_downloader/core/database/database.dart';
+import 'package:pdf_downloader/domain/model/document.dart';
 import 'package:pdf_downloader/domain/model/document_status.dart';
 
 class DbProvider {
@@ -22,6 +24,20 @@ class DbProvider {
         name: name,
         url: url,
         documentStatus: status,
+      ),
+    );
+  }
+
+  Future<bool> updateDocument({
+    required Document document,
+  }) async {
+    return await _db.documentDao.updateDocument(
+      DocumentTableCompanion.insert(
+        documentId: Value(document.documentId),
+        name: document.name,
+        url: document.url,
+        documentStatus: document.status,
+        filePath: Value(document.filePath),
       ),
     );
   }
