@@ -485,6 +485,7 @@ mixin _$DocumentsState {
     required TResult Function(List<Document> documents) listIsReady,
     required TResult Function() isLoading,
     required TResult Function() empty,
+    required TResult Function(List<Document> documents) documentAdded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -492,6 +493,7 @@ mixin _$DocumentsState {
     TResult? Function(List<Document> documents)? listIsReady,
     TResult? Function()? isLoading,
     TResult? Function()? empty,
+    TResult? Function(List<Document> documents)? documentAdded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -499,6 +501,7 @@ mixin _$DocumentsState {
     TResult Function(List<Document> documents)? listIsReady,
     TResult Function()? isLoading,
     TResult Function()? empty,
+    TResult Function(List<Document> documents)? documentAdded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -507,6 +510,7 @@ mixin _$DocumentsState {
     required TResult Function(_ListIsReady value) listIsReady,
     required TResult Function(_isLoading value) isLoading,
     required TResult Function(_isEmpty value) empty,
+    required TResult Function(_DocumentAdded value) documentAdded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -514,6 +518,7 @@ mixin _$DocumentsState {
     TResult? Function(_ListIsReady value)? listIsReady,
     TResult? Function(_isLoading value)? isLoading,
     TResult? Function(_isEmpty value)? empty,
+    TResult? Function(_DocumentAdded value)? documentAdded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -521,6 +526,7 @@ mixin _$DocumentsState {
     TResult Function(_ListIsReady value)? listIsReady,
     TResult Function(_isLoading value)? isLoading,
     TResult Function(_isEmpty value)? empty,
+    TResult Function(_DocumentAdded value)? documentAdded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -619,6 +625,7 @@ class _$_ListIsReady implements _ListIsReady {
     required TResult Function(List<Document> documents) listIsReady,
     required TResult Function() isLoading,
     required TResult Function() empty,
+    required TResult Function(List<Document> documents) documentAdded,
   }) {
     return listIsReady(documents);
   }
@@ -629,6 +636,7 @@ class _$_ListIsReady implements _ListIsReady {
     TResult? Function(List<Document> documents)? listIsReady,
     TResult? Function()? isLoading,
     TResult? Function()? empty,
+    TResult? Function(List<Document> documents)? documentAdded,
   }) {
     return listIsReady?.call(documents);
   }
@@ -639,6 +647,7 @@ class _$_ListIsReady implements _ListIsReady {
     TResult Function(List<Document> documents)? listIsReady,
     TResult Function()? isLoading,
     TResult Function()? empty,
+    TResult Function(List<Document> documents)? documentAdded,
     required TResult orElse(),
   }) {
     if (listIsReady != null) {
@@ -653,6 +662,7 @@ class _$_ListIsReady implements _ListIsReady {
     required TResult Function(_ListIsReady value) listIsReady,
     required TResult Function(_isLoading value) isLoading,
     required TResult Function(_isEmpty value) empty,
+    required TResult Function(_DocumentAdded value) documentAdded,
   }) {
     return listIsReady(this);
   }
@@ -663,6 +673,7 @@ class _$_ListIsReady implements _ListIsReady {
     TResult? Function(_ListIsReady value)? listIsReady,
     TResult? Function(_isLoading value)? isLoading,
     TResult? Function(_isEmpty value)? empty,
+    TResult? Function(_DocumentAdded value)? documentAdded,
   }) {
     return listIsReady?.call(this);
   }
@@ -673,6 +684,7 @@ class _$_ListIsReady implements _ListIsReady {
     TResult Function(_ListIsReady value)? listIsReady,
     TResult Function(_isLoading value)? isLoading,
     TResult Function(_isEmpty value)? empty,
+    TResult Function(_DocumentAdded value)? documentAdded,
     required TResult orElse(),
   }) {
     if (listIsReady != null) {
@@ -733,6 +745,7 @@ class _$_isLoading implements _isLoading {
     required TResult Function(List<Document> documents) listIsReady,
     required TResult Function() isLoading,
     required TResult Function() empty,
+    required TResult Function(List<Document> documents) documentAdded,
   }) {
     return isLoading();
   }
@@ -743,6 +756,7 @@ class _$_isLoading implements _isLoading {
     TResult? Function(List<Document> documents)? listIsReady,
     TResult? Function()? isLoading,
     TResult? Function()? empty,
+    TResult? Function(List<Document> documents)? documentAdded,
   }) {
     return isLoading?.call();
   }
@@ -753,6 +767,7 @@ class _$_isLoading implements _isLoading {
     TResult Function(List<Document> documents)? listIsReady,
     TResult Function()? isLoading,
     TResult Function()? empty,
+    TResult Function(List<Document> documents)? documentAdded,
     required TResult orElse(),
   }) {
     if (isLoading != null) {
@@ -767,6 +782,7 @@ class _$_isLoading implements _isLoading {
     required TResult Function(_ListIsReady value) listIsReady,
     required TResult Function(_isLoading value) isLoading,
     required TResult Function(_isEmpty value) empty,
+    required TResult Function(_DocumentAdded value) documentAdded,
   }) {
     return isLoading(this);
   }
@@ -777,6 +793,7 @@ class _$_isLoading implements _isLoading {
     TResult? Function(_ListIsReady value)? listIsReady,
     TResult? Function(_isLoading value)? isLoading,
     TResult? Function(_isEmpty value)? empty,
+    TResult? Function(_DocumentAdded value)? documentAdded,
   }) {
     return isLoading?.call(this);
   }
@@ -787,6 +804,7 @@ class _$_isLoading implements _isLoading {
     TResult Function(_ListIsReady value)? listIsReady,
     TResult Function(_isLoading value)? isLoading,
     TResult Function(_isEmpty value)? empty,
+    TResult Function(_DocumentAdded value)? documentAdded,
     required TResult orElse(),
   }) {
     if (isLoading != null) {
@@ -840,6 +858,7 @@ class _$_isEmpty implements _isEmpty {
     required TResult Function(List<Document> documents) listIsReady,
     required TResult Function() isLoading,
     required TResult Function() empty,
+    required TResult Function(List<Document> documents) documentAdded,
   }) {
     return empty();
   }
@@ -850,6 +869,7 @@ class _$_isEmpty implements _isEmpty {
     TResult? Function(List<Document> documents)? listIsReady,
     TResult? Function()? isLoading,
     TResult? Function()? empty,
+    TResult? Function(List<Document> documents)? documentAdded,
   }) {
     return empty?.call();
   }
@@ -860,6 +880,7 @@ class _$_isEmpty implements _isEmpty {
     TResult Function(List<Document> documents)? listIsReady,
     TResult Function()? isLoading,
     TResult Function()? empty,
+    TResult Function(List<Document> documents)? documentAdded,
     required TResult orElse(),
   }) {
     if (empty != null) {
@@ -874,6 +895,7 @@ class _$_isEmpty implements _isEmpty {
     required TResult Function(_ListIsReady value) listIsReady,
     required TResult Function(_isLoading value) isLoading,
     required TResult Function(_isEmpty value) empty,
+    required TResult Function(_DocumentAdded value) documentAdded,
   }) {
     return empty(this);
   }
@@ -884,6 +906,7 @@ class _$_isEmpty implements _isEmpty {
     TResult? Function(_ListIsReady value)? listIsReady,
     TResult? Function(_isLoading value)? isLoading,
     TResult? Function(_isEmpty value)? empty,
+    TResult? Function(_DocumentAdded value)? documentAdded,
   }) {
     return empty?.call(this);
   }
@@ -894,6 +917,7 @@ class _$_isEmpty implements _isEmpty {
     TResult Function(_ListIsReady value)? listIsReady,
     TResult Function(_isLoading value)? isLoading,
     TResult Function(_isEmpty value)? empty,
+    TResult Function(_DocumentAdded value)? documentAdded,
     required TResult orElse(),
   }) {
     if (empty != null) {
@@ -905,4 +929,158 @@ class _$_isEmpty implements _isEmpty {
 
 abstract class _isEmpty implements DocumentsState {
   const factory _isEmpty() = _$_isEmpty;
+}
+
+/// @nodoc
+abstract class _$$_DocumentAddedCopyWith<$Res> {
+  factory _$$_DocumentAddedCopyWith(
+          _$_DocumentAdded value, $Res Function(_$_DocumentAdded) then) =
+      __$$_DocumentAddedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<Document> documents});
+}
+
+/// @nodoc
+class __$$_DocumentAddedCopyWithImpl<$Res>
+    extends _$DocumentsStateCopyWithImpl<$Res, _$_DocumentAdded>
+    implements _$$_DocumentAddedCopyWith<$Res> {
+  __$$_DocumentAddedCopyWithImpl(
+      _$_DocumentAdded _value, $Res Function(_$_DocumentAdded) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? documents = null,
+  }) {
+    return _then(_$_DocumentAdded(
+      documents: null == documents
+          ? _value._documents
+          : documents // ignore: cast_nullable_to_non_nullable
+              as List<Document>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_DocumentAdded implements _DocumentAdded {
+  const _$_DocumentAdded({required final List<Document> documents})
+      : _documents = documents;
+
+  final List<Document> _documents;
+  @override
+  List<Document> get documents {
+    if (_documents is EqualUnmodifiableListView) return _documents;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_documents);
+  }
+
+  @override
+  String toString() {
+    return 'DocumentsState.documentAdded(documents: $documents)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DocumentAdded &&
+            const DeepCollectionEquality()
+                .equals(other._documents, _documents));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_documents));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DocumentAddedCopyWith<_$_DocumentAdded> get copyWith =>
+      __$$_DocumentAddedCopyWithImpl<_$_DocumentAdded>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<Document> documents) listIsReady,
+    required TResult Function() isLoading,
+    required TResult Function() empty,
+    required TResult Function(List<Document> documents) documentAdded,
+  }) {
+    return documentAdded(documents);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<Document> documents)? listIsReady,
+    TResult? Function()? isLoading,
+    TResult? Function()? empty,
+    TResult? Function(List<Document> documents)? documentAdded,
+  }) {
+    return documentAdded?.call(documents);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<Document> documents)? listIsReady,
+    TResult Function()? isLoading,
+    TResult Function()? empty,
+    TResult Function(List<Document> documents)? documentAdded,
+    required TResult orElse(),
+  }) {
+    if (documentAdded != null) {
+      return documentAdded(documents);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ListIsReady value) listIsReady,
+    required TResult Function(_isLoading value) isLoading,
+    required TResult Function(_isEmpty value) empty,
+    required TResult Function(_DocumentAdded value) documentAdded,
+  }) {
+    return documentAdded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ListIsReady value)? listIsReady,
+    TResult? Function(_isLoading value)? isLoading,
+    TResult? Function(_isEmpty value)? empty,
+    TResult? Function(_DocumentAdded value)? documentAdded,
+  }) {
+    return documentAdded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ListIsReady value)? listIsReady,
+    TResult Function(_isLoading value)? isLoading,
+    TResult Function(_isEmpty value)? empty,
+    TResult Function(_DocumentAdded value)? documentAdded,
+    required TResult orElse(),
+  }) {
+    if (documentAdded != null) {
+      return documentAdded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _DocumentAdded implements DocumentsState {
+  const factory _DocumentAdded({required final List<Document> documents}) =
+      _$_DocumentAdded;
+
+  List<Document> get documents;
+  @JsonKey(ignore: true)
+  _$$_DocumentAddedCopyWith<_$_DocumentAdded> get copyWith =>
+      throw _privateConstructorUsedError;
 }

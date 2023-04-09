@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pdf_downloader/presentation/bloc/documents_bloc.dart';
+import 'package:pdf_downloader/presentation/bloc/document/documents_bloc.dart';
 import 'package:pdf_downloader/presentation/widget/add_document_modal.dart';
 import 'package:pdf_downloader/presentation/widget/documents_list.dart';
 
@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: false,
         title: const Text('Хранение билетов'),
       ),
-      body: const DocumentsList(),
+      body: const DocumentsView(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           var url = await showModalBottomSheet<String>(
@@ -31,11 +31,6 @@ class _HomePageState extends State<HomePage> {
 
           if (url != null) {
             BlocProvider.of<DocumentsBloc>(context).add(DocumentsEvent.addDocument(url));
-
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('Документ $url успешно добавлен!'),
-              duration: const Duration(seconds: 2),
-            ));
           }
         },
         label: const Text('Добавить'),

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pdf_downloader/domain/document_repository.dart';
@@ -22,7 +20,6 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
         super(const DocumentsState.listIsReady(documents: [])) {
     on<_AddDocument>(_onAddDocument);
     on<_LoadList>(_onLoadList);
-    on<_DownloadDocument>(_onDownloadDocument);
   }
 
   void _onAddDocument(_AddDocument event, Emitter emit) async {
@@ -52,51 +49,6 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
 
       documents = listResponse.toList();
       emit(DocumentsState.listIsReady(documents: listResponse.toList()));
-    }
-  }
-
-  void _onDownloadDocument(_DownloadDocument event, Emitter emit) async {
-    var progressController = StreamController<double>();
-
-    var indexOfCurrentDocument = documents.indexOf(event.document);
-
-    documents.removeWhere(
-        (element) => element.documentId == event.document.documentId);
-
-    var documentsBefore = documents.sublist(0, indexOfCurrentDocument);
-    var documentsAfter =
-        documents.sublist(indexOfCurrentDocument, documents.length);
-
-    var newDocument = event.document.copyWith(
-      downloadProgressStream: progressController,
-      status: DocumentStatus.loading,
-    );
-
-    documents = documentsBefore + [newDocument] + documentsAfter;
-
-    emit(DocumentsState.listIsReady(documents: documents));
-
-    var filePath = await _repository.downloadDocument(
-      url: event.document.url,
-      progressStream: progressController,
-    );
-
-    if (filePath == null) {
-      var docWithError = newDocument.copyWith(
-          status: DocumentStatus.waitLoading, downloadProgressStream: null);
-
-      documents = documentsBefore + [docWithError] + documentsAfter;
-
-      emit(DocumentsState.listIsReady(documents: documents));
-    } else {
-      var docWithFilePath = newDocument.copyWith(
-        status: DocumentStatus.loaded,
-        downloadProgressStream: null,
-        filePath: filePath,
-      );
-
-      documents = documentsBefore + [docWithFilePath] + documentsAfter;
-      emit(DocumentsState.listIsReady(documents: documents));
     }
   }
 }

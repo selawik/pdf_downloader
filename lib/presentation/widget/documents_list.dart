@@ -1,81 +1,121 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pdf_downloader/data/document_repository_impl.dart';
 import 'package:pdf_downloader/domain/model/document.dart';
 import 'package:pdf_downloader/domain/model/document_status.dart';
-import 'package:pdf_downloader/presentation/bloc/documents_bloc.dart';
+import 'package:pdf_downloader/presentation/bloc/document/documents_bloc.dart';
+import 'package:pdf_downloader/presentation/bloc/download/download_bloc.dart';
 import 'package:pdf_downloader/presentation/widget/download_progress_indicator.dart';
 
-class DocumentsList extends StatelessWidget {
-  const DocumentsList({Key? key}) : super(key: key);
+class DocumentsView extends StatelessWidget {
+  const DocumentsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DocumentsBloc, DocumentsState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        state.mapOrNull(documentAdded: (documents) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Документ успешно добавлен!'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        });
+      },
       builder: (context, state) {
         return state.when(
-          empty: () => const Center(
-            child: Text('Список пуст'),
-          ),
+          empty: () => const Center(child: Text('Список пуст')),
           isLoading: () => const Center(child: CircularProgressIndicator()),
-          listIsReady: (documents) {
-            return ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: documents.length,
-              itemBuilder: (context, index) {
-                var item = documents[index];
-
-                return Row(
-                  children: [
-                    const Icon(Icons.train),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(item.name),
-                          const SizedBox(height: 4),
-                          if (item.status == DocumentStatus.waitLoading)
-                            const DownloadProgressIndicator.notStarted()
-                          else if (item.downloadProgressStream != null)
-                            StreamBuilder<double>(
-                              builder:
-                                  (context, AsyncSnapshot<double> snapshot) {
-                                return DownloadProgressIndicator(
-                                  value: snapshot.data ?? 0,
-                                );
-                              },
-                              stream: item.downloadProgressStream?.stream,
-                            )
-                          else if (item.status == DocumentStatus.loaded)
-                            const DownloadProgressIndicator.complete(),
-                          const SizedBox(height: 4),
-                          Text(item.status.title),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    GestureDetector(
-                      onTap: () => onItemButtonTap(context, item),
-                      child: Icon(_getIconDataForDocumentStatus(item.status)),
-                    ),
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 16);
-              },
-            );
-          },
+          listIsReady: (documents) => DocumentsListView(documents: documents),
+          documentAdded: (documents) => DocumentsListView(documents: documents),
         );
+      },
+    );
+  }
+}
+
+class DocumentsListView extends StatelessWidget {
+  final List<Document> documents;
+
+  const DocumentsListView({
+    Key? key,
+    required this.documents,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: const EdgeInsets.only(bottom: 88, left: 16, right: 16),
+      itemCount: documents.length,
+      itemBuilder: (context, index) {
+        var item = documents[index];
+        var repository = RepositoryProvider.of<DocumentRepositoryImpl>(context);
+
+        return BlocProvider<DownloadBloc>(
+          create: (context) => DownloadBloc(
+            document: item,
+            repository: repository,
+          ),
+          child: BlocBuilder<DownloadBloc, DownloadState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () => Container(),
+                documentReady: (document) {
+                  return Row(
+                    children: [
+                      const Icon(Icons.train),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(document.name),
+                            const SizedBox(height: 4),
+                            if (document.status == DocumentStatus.waitLoading)
+                              const DownloadProgressIndicator.notStarted()
+                            else if (document.downloadProgressStream != null)
+                              StreamBuilder<double>(
+                                builder:
+                                    (context, AsyncSnapshot<double> snapshot) {
+                                  return DownloadProgressIndicator(
+                                    value: snapshot.data ?? 0,
+                                  );
+                                },
+                                stream: document.downloadProgressStream?.stream,
+                              )
+                            else if (document.status == DocumentStatus.loaded)
+                              const DownloadProgressIndicator.complete(),
+                            const SizedBox(height: 4),
+                            Text(document.status.title),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      GestureDetector(
+                        onTap: () => onItemButtonTap(context, document),
+                        child: Icon(
+                          _getIconDataForDocumentStatus(document.status),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        );
+      },
+      separatorBuilder: (context, index) {
+        return const SizedBox(height: 16);
       },
     );
   }
 
   void onItemButtonTap(BuildContext context, Document doc) {
     if (doc.status == DocumentStatus.waitLoading) {
-      BlocProvider.of<DocumentsBloc>(context).add(
-        DocumentsEvent.download(document: doc),
+      BlocProvider.of<DownloadBloc>(context).add(
+        DownloadEvent.download(document: doc),
       );
     }
   }
