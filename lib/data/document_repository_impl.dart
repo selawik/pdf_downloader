@@ -1,5 +1,9 @@
+import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf_downloader/data/data_source/document_remote_data_source.dart';
 import 'package:pdf_downloader/data/data_source/documents_local_data_source.dart';
 import 'package:pdf_downloader/domain/document_repository.dart';
 import 'package:pdf_downloader/domain/model/document.dart';
@@ -7,9 +11,13 @@ import 'package:pdf_downloader/domain/model/document_status.dart';
 
 class DocumentRepositoryImpl implements IDocumentRepository {
   final IDocumentsLocalDataSource _localDataSource;
+  final IDocumentRemoteDataSource _remoteDataSource;
 
-  DocumentRepositoryImpl({required IDocumentsLocalDataSource localDataSource})
-      : _localDataSource = localDataSource;
+  DocumentRepositoryImpl({
+    required IDocumentsLocalDataSource localDataSource,
+    required IDocumentRemoteDataSource remoteDataSource,
+  })  : _localDataSource = localDataSource,
+        _remoteDataSource = remoteDataSource;
 
   @override
   Future<Iterable<Document>?> loadDocuments() async {
@@ -34,5 +42,34 @@ class DocumentRepositoryImpl implements IDocumentRepository {
       log(exception.toString(), stackTrace: stacktrace);
       return null;
     }
+  }
+
+  @override
+  Future<String?> downloadDocument({
+    required String url,
+    required StreamController<int> progressStream,
+  }) async {
+    try {
+      var filePath = await _getFilePath();
+
+      await _remoteDataSource.loadDocument(
+        url: url,
+        filePath: filePath,
+        progressStream: progressStream,
+      );
+
+      return filePath;
+    } catch (exception, stacktrace) {
+      log(exception.toString(), stackTrace: stacktrace);
+      return null;
+    }
+  }
+
+  Future<String> _getFilePath() async {
+    Directory appDocumentsDirectory = await getApplicationDocumentsDirectory(); // 1
+    String appDocumentsPath = appDocumentsDirectory.path; // 2
+    String filePath = '$appDocumentsPath/tickets/${DateTime.now().microsecondsSinceEpoch}'; // 3
+
+    return filePath;
   }
 }

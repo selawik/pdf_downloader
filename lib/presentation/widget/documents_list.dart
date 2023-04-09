@@ -8,9 +8,7 @@ class DocumentsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<DocumentsBloc, DocumentsState>(
-      listener: (context, state) {
-
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return state.when(
           empty: () => const Center(
@@ -26,6 +24,13 @@ class DocumentsList extends StatelessWidget {
 
                 return Row(
                   children: [
+                    if (item.downloadProgressStream != null)
+                      StreamBuilder<int>(
+                        builder: (context, AsyncSnapshot<int> snapshot) {
+                          return Text(snapshot.data.toString());
+                        },
+                        stream: item.downloadProgressStream?.stream,
+                      ),
                     const Icon(Icons.train),
                     const SizedBox(width: 16),
                     Expanded(
@@ -38,7 +43,13 @@ class DocumentsList extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    const Icon(Icons.pause),
+                    GestureDetector(
+                      child: const Icon(Icons.pause),
+                      onTap: () {
+                        BlocProvider.of<DocumentsBloc>(context)
+                            .add(DocumentsEvent.download(document: item));
+                      },
+                    ),
                   ],
                 );
               },

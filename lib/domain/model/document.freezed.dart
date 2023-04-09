@@ -20,6 +20,9 @@ mixin _$Document {
   String get name => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
   DocumentStatus get status => throw _privateConstructorUsedError;
+  StreamController<int>? get downloadProgressStream =>
+      throw _privateConstructorUsedError;
+  String? get filePath => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DocumentCopyWith<Document> get copyWith =>
@@ -31,7 +34,13 @@ abstract class $DocumentCopyWith<$Res> {
   factory $DocumentCopyWith(Document value, $Res Function(Document) then) =
       _$DocumentCopyWithImpl<$Res, Document>;
   @useResult
-  $Res call({int documentId, String name, String url, DocumentStatus status});
+  $Res call(
+      {int documentId,
+      String name,
+      String url,
+      DocumentStatus status,
+      StreamController<int>? downloadProgressStream,
+      String? filePath});
 }
 
 /// @nodoc
@@ -51,6 +60,8 @@ class _$DocumentCopyWithImpl<$Res, $Val extends Document>
     Object? name = null,
     Object? url = null,
     Object? status = null,
+    Object? downloadProgressStream = freezed,
+    Object? filePath = freezed,
   }) {
     return _then(_value.copyWith(
       documentId: null == documentId
@@ -69,6 +80,14 @@ class _$DocumentCopyWithImpl<$Res, $Val extends Document>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as DocumentStatus,
+      downloadProgressStream: freezed == downloadProgressStream
+          ? _value.downloadProgressStream
+          : downloadProgressStream // ignore: cast_nullable_to_non_nullable
+              as StreamController<int>?,
+      filePath: freezed == filePath
+          ? _value.filePath
+          : filePath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -80,7 +99,13 @@ abstract class _$$_DocumentCopyWith<$Res> implements $DocumentCopyWith<$Res> {
       __$$_DocumentCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int documentId, String name, String url, DocumentStatus status});
+  $Res call(
+      {int documentId,
+      String name,
+      String url,
+      DocumentStatus status,
+      StreamController<int>? downloadProgressStream,
+      String? filePath});
 }
 
 /// @nodoc
@@ -98,6 +123,8 @@ class __$$_DocumentCopyWithImpl<$Res>
     Object? name = null,
     Object? url = null,
     Object? status = null,
+    Object? downloadProgressStream = freezed,
+    Object? filePath = freezed,
   }) {
     return _then(_$_Document(
       documentId: null == documentId
@@ -116,6 +143,14 @@ class __$$_DocumentCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as DocumentStatus,
+      downloadProgressStream: freezed == downloadProgressStream
+          ? _value.downloadProgressStream
+          : downloadProgressStream // ignore: cast_nullable_to_non_nullable
+              as StreamController<int>?,
+      filePath: freezed == filePath
+          ? _value.filePath
+          : filePath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -127,7 +162,9 @@ class _$_Document implements _Document {
       {required this.documentId,
       required this.name,
       required this.url,
-      required this.status});
+      required this.status,
+      this.downloadProgressStream,
+      this.filePath});
 
   @override
   final int documentId;
@@ -137,10 +174,14 @@ class _$_Document implements _Document {
   final String url;
   @override
   final DocumentStatus status;
+  @override
+  final StreamController<int>? downloadProgressStream;
+  @override
+  final String? filePath;
 
   @override
   String toString() {
-    return 'Document(documentId: $documentId, name: $name, url: $url, status: $status)';
+    return 'Document(documentId: $documentId, name: $name, url: $url, status: $status, downloadProgressStream: $downloadProgressStream, filePath: $filePath)';
   }
 
   @override
@@ -152,11 +193,16 @@ class _$_Document implements _Document {
                 other.documentId == documentId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.url, url) || other.url == url) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.downloadProgressStream, downloadProgressStream) ||
+                other.downloadProgressStream == downloadProgressStream) &&
+            (identical(other.filePath, filePath) ||
+                other.filePath == filePath));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, documentId, name, url, status);
+  int get hashCode => Object.hash(runtimeType, documentId, name, url, status,
+      downloadProgressStream, filePath);
 
   @JsonKey(ignore: true)
   @override
@@ -170,7 +216,9 @@ abstract class _Document implements Document {
       {required final int documentId,
       required final String name,
       required final String url,
-      required final DocumentStatus status}) = _$_Document;
+      required final DocumentStatus status,
+      final StreamController<int>? downloadProgressStream,
+      final String? filePath}) = _$_Document;
 
   @override
   int get documentId;
@@ -180,6 +228,10 @@ abstract class _Document implements Document {
   String get url;
   @override
   DocumentStatus get status;
+  @override
+  StreamController<int>? get downloadProgressStream;
+  @override
+  String? get filePath;
   @override
   @JsonKey(ignore: true)
   _$$_DocumentCopyWith<_$_Document> get copyWith =>

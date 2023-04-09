@@ -20,18 +20,21 @@ mixin _$DocumentsEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String url) addDocument,
     required TResult Function() loadList,
+    required TResult Function(Document document) download,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String url)? addDocument,
     TResult? Function()? loadList,
+    TResult? Function(Document document)? download,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String url)? addDocument,
     TResult Function()? loadList,
+    TResult Function(Document document)? download,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$DocumentsEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_AddDocument value) addDocument,
     required TResult Function(_LoadList value) loadList,
+    required TResult Function(_DownloadDocument value) download,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AddDocument value)? addDocument,
     TResult? Function(_LoadList value)? loadList,
+    TResult? Function(_DownloadDocument value)? download,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AddDocument value)? addDocument,
     TResult Function(_LoadList value)? loadList,
+    TResult Function(_DownloadDocument value)? download,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -140,6 +146,7 @@ class _$_AddDocument implements _AddDocument {
   TResult when<TResult extends Object?>({
     required TResult Function(String url) addDocument,
     required TResult Function() loadList,
+    required TResult Function(Document document) download,
   }) {
     return addDocument(url);
   }
@@ -149,6 +156,7 @@ class _$_AddDocument implements _AddDocument {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String url)? addDocument,
     TResult? Function()? loadList,
+    TResult? Function(Document document)? download,
   }) {
     return addDocument?.call(url);
   }
@@ -158,6 +166,7 @@ class _$_AddDocument implements _AddDocument {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String url)? addDocument,
     TResult Function()? loadList,
+    TResult Function(Document document)? download,
     required TResult orElse(),
   }) {
     if (addDocument != null) {
@@ -171,6 +180,7 @@ class _$_AddDocument implements _AddDocument {
   TResult map<TResult extends Object?>({
     required TResult Function(_AddDocument value) addDocument,
     required TResult Function(_LoadList value) loadList,
+    required TResult Function(_DownloadDocument value) download,
   }) {
     return addDocument(this);
   }
@@ -180,6 +190,7 @@ class _$_AddDocument implements _AddDocument {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AddDocument value)? addDocument,
     TResult? Function(_LoadList value)? loadList,
+    TResult? Function(_DownloadDocument value)? download,
   }) {
     return addDocument?.call(this);
   }
@@ -189,6 +200,7 @@ class _$_AddDocument implements _AddDocument {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AddDocument value)? addDocument,
     TResult Function(_LoadList value)? loadList,
+    TResult Function(_DownloadDocument value)? download,
     required TResult orElse(),
   }) {
     if (addDocument != null) {
@@ -247,6 +259,7 @@ class _$_LoadList implements _LoadList {
   TResult when<TResult extends Object?>({
     required TResult Function(String url) addDocument,
     required TResult Function() loadList,
+    required TResult Function(Document document) download,
   }) {
     return loadList();
   }
@@ -256,6 +269,7 @@ class _$_LoadList implements _LoadList {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String url)? addDocument,
     TResult? Function()? loadList,
+    TResult? Function(Document document)? download,
   }) {
     return loadList?.call();
   }
@@ -265,6 +279,7 @@ class _$_LoadList implements _LoadList {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String url)? addDocument,
     TResult Function()? loadList,
+    TResult Function(Document document)? download,
     required TResult orElse(),
   }) {
     if (loadList != null) {
@@ -278,6 +293,7 @@ class _$_LoadList implements _LoadList {
   TResult map<TResult extends Object?>({
     required TResult Function(_AddDocument value) addDocument,
     required TResult Function(_LoadList value) loadList,
+    required TResult Function(_DownloadDocument value) download,
   }) {
     return loadList(this);
   }
@@ -287,6 +303,7 @@ class _$_LoadList implements _LoadList {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AddDocument value)? addDocument,
     TResult? Function(_LoadList value)? loadList,
+    TResult? Function(_DownloadDocument value)? download,
   }) {
     return loadList?.call(this);
   }
@@ -296,6 +313,7 @@ class _$_LoadList implements _LoadList {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AddDocument value)? addDocument,
     TResult Function(_LoadList value)? loadList,
+    TResult Function(_DownloadDocument value)? download,
     required TResult orElse(),
   }) {
     if (loadList != null) {
@@ -307,6 +325,157 @@ class _$_LoadList implements _LoadList {
 
 abstract class _LoadList implements DocumentsEvent {
   const factory _LoadList() = _$_LoadList;
+}
+
+/// @nodoc
+abstract class _$$_DownloadDocumentCopyWith<$Res> {
+  factory _$$_DownloadDocumentCopyWith(
+          _$_DownloadDocument value, $Res Function(_$_DownloadDocument) then) =
+      __$$_DownloadDocumentCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Document document});
+
+  $DocumentCopyWith<$Res> get document;
+}
+
+/// @nodoc
+class __$$_DownloadDocumentCopyWithImpl<$Res>
+    extends _$DocumentsEventCopyWithImpl<$Res, _$_DownloadDocument>
+    implements _$$_DownloadDocumentCopyWith<$Res> {
+  __$$_DownloadDocumentCopyWithImpl(
+      _$_DownloadDocument _value, $Res Function(_$_DownloadDocument) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? document = null,
+  }) {
+    return _then(_$_DownloadDocument(
+      document: null == document
+          ? _value.document
+          : document // ignore: cast_nullable_to_non_nullable
+              as Document,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentCopyWith<$Res> get document {
+    return $DocumentCopyWith<$Res>(_value.document, (value) {
+      return _then(_value.copyWith(document: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_DownloadDocument implements _DownloadDocument {
+  const _$_DownloadDocument({required this.document});
+
+  @override
+  final Document document;
+
+  @override
+  String toString() {
+    return 'DocumentsEvent.download(document: $document)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DownloadDocument &&
+            (identical(other.document, document) ||
+                other.document == document));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, document);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DownloadDocumentCopyWith<_$_DownloadDocument> get copyWith =>
+      __$$_DownloadDocumentCopyWithImpl<_$_DownloadDocument>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String url) addDocument,
+    required TResult Function() loadList,
+    required TResult Function(Document document) download,
+  }) {
+    return download(document);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String url)? addDocument,
+    TResult? Function()? loadList,
+    TResult? Function(Document document)? download,
+  }) {
+    return download?.call(document);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String url)? addDocument,
+    TResult Function()? loadList,
+    TResult Function(Document document)? download,
+    required TResult orElse(),
+  }) {
+    if (download != null) {
+      return download(document);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AddDocument value) addDocument,
+    required TResult Function(_LoadList value) loadList,
+    required TResult Function(_DownloadDocument value) download,
+  }) {
+    return download(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_AddDocument value)? addDocument,
+    TResult? Function(_LoadList value)? loadList,
+    TResult? Function(_DownloadDocument value)? download,
+  }) {
+    return download?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AddDocument value)? addDocument,
+    TResult Function(_LoadList value)? loadList,
+    TResult Function(_DownloadDocument value)? download,
+    required TResult orElse(),
+  }) {
+    if (download != null) {
+      return download(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _DownloadDocument implements DocumentsEvent {
+  const factory _DownloadDocument({required final Document document}) =
+      _$_DownloadDocument;
+
+  Document get document;
+  @JsonKey(ignore: true)
+  _$$_DownloadDocumentCopyWith<_$_DownloadDocument> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

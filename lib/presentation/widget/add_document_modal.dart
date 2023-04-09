@@ -46,6 +46,7 @@ class _AddDocumentModalState extends State<AddDocumentModal> {
           TextFormField(
             key: fieldKey,
             controller: urlController,
+            autocorrect: false,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: validateField,
             decoration: const InputDecoration(

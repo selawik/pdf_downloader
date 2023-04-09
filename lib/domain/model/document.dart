@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pdf_downloader/domain/model/document_status.dart';
 
@@ -10,5 +12,7 @@ class Document with _$Document {
     required String name,
     required String url,
     required DocumentStatus status,
+    StreamController<int>? downloadProgressStream,
+    String? filePath,
   }) = _Document;
 }
