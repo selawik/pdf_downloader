@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf_downloader/data/data_source/document_remote_data_source.dart';
-import 'package:pdf_downloader/data/data_source/documents_local_data_source.dart';
-import 'package:pdf_downloader/domain/document_repository.dart';
-import 'package:pdf_downloader/domain/model/document.dart';
-import 'package:pdf_downloader/domain/model/document_status.dart';
+import 'package:pdf_downloader/src/core/data/data_source/document_remote_data_source.dart';
+import 'package:pdf_downloader/src/core/data/data_source/documents_local_data_source.dart';
+import 'package:pdf_downloader/src/core/domain/document_repository.dart';
+import 'package:pdf_downloader/src/core/domain/model/document.dart';
+import 'package:pdf_downloader/src/core/domain/model/document_status.dart';
 
 class DocumentRepositoryImpl implements IDocumentRepository {
   final IDocumentsLocalDataSource _localDataSource;

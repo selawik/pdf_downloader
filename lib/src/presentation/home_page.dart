@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pdf_downloader/presentation/bloc/document/documents_bloc.dart';
-import 'package:pdf_downloader/presentation/widget/add_document_modal.dart';
-import 'package:pdf_downloader/presentation/widget/documents_list.dart';
+import 'package:pdf_downloader/src/presentation/bloc/document/documents_bloc.dart';
+import 'package:pdf_downloader/src/presentation/widget/add_document_modal.dart';
+import 'package:pdf_downloader/src/presentation/widget/documents_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

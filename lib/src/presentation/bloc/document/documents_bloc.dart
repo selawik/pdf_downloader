@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pdf_downloader/domain/document_repository.dart';
-import 'package:pdf_downloader/domain/model/document.dart';
-import 'package:pdf_downloader/domain/model/document_status.dart';
+import 'package:pdf_downloader/src/core/domain/document_repository.dart';
+import 'package:pdf_downloader/src/core/domain/model/document.dart';
+import 'package:pdf_downloader/src/core/domain/model/document_status.dart';
 
 part 'documents_bloc.freezed.dart';
 part 'documents_event.dart';

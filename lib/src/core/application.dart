@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pdf_downloader/data/document_repository_impl.dart';
-import 'package:pdf_downloader/presentation/bloc/document/documents_bloc.dart';
-import 'package:pdf_downloader/presentation/home_page.dart';
+import 'package:pdf_downloader/src/core/data/document_repository_impl.dart';
+import 'package:pdf_downloader/src/presentation/bloc/document/documents_bloc.dart';
+import 'package:pdf_downloader/src/presentation/home_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

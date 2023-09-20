@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pdf_downloader/data/document_repository_impl.dart';
-import 'package:pdf_downloader/domain/model/document.dart';
-import 'package:pdf_downloader/domain/model/document_status.dart';
-import 'package:pdf_downloader/presentation/bloc/document/documents_bloc.dart';
-import 'package:pdf_downloader/presentation/bloc/download/download_bloc.dart';
-import 'package:pdf_downloader/presentation/widget/download_progress_indicator.dart';
+import 'package:pdf_downloader/src/core/data/document_repository_impl.dart';
+import 'package:pdf_downloader/src/core/domain/model/document.dart';
+import 'package:pdf_downloader/src/core/domain/model/document_status.dart';
+import 'package:pdf_downloader/src/presentation/bloc/document/documents_bloc.dart';
+import 'package:pdf_downloader/src/presentation/bloc/download/download_bloc.dart';
+import 'package:pdf_downloader/src/presentation/widget/download_progress_indicator.dart';
 
 class DocumentsView extends StatelessWidget {
   const DocumentsView({super.key});

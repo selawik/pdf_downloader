@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pdf_downloader/domain/model/document_status.dart';
+import 'package:pdf_downloader/src/core/domain/model/document_status.dart';
 
 part 'document.freezed.dart';
 

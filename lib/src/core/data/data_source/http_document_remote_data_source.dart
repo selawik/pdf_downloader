@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:pdf_downloader/data/data_source/document_remote_data_source.dart';
+import 'package:pdf_downloader/src/core/data/data_source/document_remote_data_source.dart';
 
 class HttpDocumentRemoteDataSource implements IDocumentRemoteDataSource {
   final Dio _dioClient;

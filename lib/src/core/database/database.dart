@@ -6,9 +6,9 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf_downloader/core/database/daos/document_dao.dart';
-import 'package:pdf_downloader/core/database/table/document_table.dart';
-import 'package:pdf_downloader/domain/model/document_status.dart';
+import 'package:pdf_downloader/src/core/database/daos/document_dao.dart';
+import 'package:pdf_downloader/src/core/database/table/document_table.dart';
+import 'package:pdf_downloader/src/core/domain/model/document_status.dart';
 
 part 'database.g.dart';
 

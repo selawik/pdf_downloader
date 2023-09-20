@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:pdf_downloader/core/database/database.dart';
-import 'package:pdf_downloader/core/database/table/document_table.dart';
+import 'package:pdf_downloader/src/core/database/database.dart';
+import 'package:pdf_downloader/src/core/database/table/document_table.dart';
 
 part 'document_dao.g.dart';
 

@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pdf_downloader/domain/document_repository.dart';
-import 'package:pdf_downloader/domain/model/document.dart';
-import 'package:pdf_downloader/domain/model/document_status.dart';
-import 'package:pdf_downloader/presentation/bloc/document/documents_bloc.dart';
+import 'package:pdf_downloader/src/core/domain/document_repository.dart';
+import 'package:pdf_downloader/src/core/domain/model/document.dart';
+import 'package:pdf_downloader/src/core/domain/model/document_status.dart';
+import 'package:pdf_downloader/src/presentation/bloc/document/documents_bloc.dart';
 
 part 'download_bloc.freezed.dart';
 part 'download_event.dart';
