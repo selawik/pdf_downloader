@@ -14,23 +14,23 @@ class DocumentsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<DocumentsBloc, DocumentsState>(
       listener: (context, state) {
-        state.mapOrNull(
-          documentAdded: (documents) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Документ успешно добавлен!'),
-                duration: Duration(seconds: 2),
-              ),
-            );
-          },
-        );
+        //TODO (@selawik) come back snackbar
+        // state.mapOrNull(
+        //   documentAdded: (documents) {
+        //     ScaffoldMessenger.of(context).showSnackBar(
+        //       const SnackBar(
+        //         content: Text('Документ успешно добавлен!'),
+        //         duration: Duration(seconds: 2),
+        //       ),
+        //     );
+        //   },
+        // );
       },
       builder: (context, state) {
         return state.when(
           empty: () => const Center(child: Text('Список пуст')),
           isLoading: () => const Center(child: CircularProgressIndicator()),
           listIsReady: (documents) => DocumentsListView(documents: documents),
-          documentAdded: (documents) => DocumentsListView(documents: documents),
         );
       },
     );

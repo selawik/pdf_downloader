@@ -11,8 +11,6 @@ part 'documents_state.dart';
 class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
   final IDocumentRepository _repository;
 
-  List<Document> documents = [];
-
   DocumentsBloc({
     required IDocumentRepository repository,
   })  : _repository = repository,
@@ -23,18 +21,24 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
   }
 
   Future<void> _onAddDocument(
-      _AddDocument event, Emitter<DocumentsState> emit) async {
-    final addedDocument = await _repository.saveDocument(
-      name: 'Ticket ${documents.length + 1}',
-      url: event.url,
-      status: DocumentStatus.waitLoading,
-    );
+    _AddDocument event,
+    Emitter<DocumentsState> emit,
+  ) async {
+    final currentState = state;
 
-    if (addedDocument != null) {
-      documents.add(addedDocument);
+    if (currentState is _ListIsReady) {
+      final addedDocument = await _repository.saveDocument(
+        name: 'Ticket ${currentState.documents.length + 1}',
+        url: event.url,
+        status: DocumentStatus.waitLoading,
+      );
+
+      if (addedDocument != null) {
+        final newDocuments = currentState.documents + [addedDocument];
+
+        emit(DocumentsState.listIsReady(documents: newDocuments));
+      }
     }
-
-    emit(DocumentsState.listIsReady(documents: documents));
   }
 
   Future<void> _onLoadList(
@@ -49,7 +53,6 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
         return;
       }
 
-      documents = listResponse.toList();
       emit(DocumentsState.listIsReady(documents: listResponse.toList()));
     }
   }
@@ -71,7 +74,6 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
         return;
       }
 
-      documents = listResponse.toList();
       emit(DocumentsState.listIsReady(documents: listResponse.toList()));
     }
   }

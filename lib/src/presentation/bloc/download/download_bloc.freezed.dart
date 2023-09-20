@@ -62,6 +62,8 @@ abstract class $DownloadEventCopyWith<$Res> {
       _$DownloadEventCopyWithImpl<$Res, DownloadEvent>;
   @useResult
   $Res call({Document document});
+
+  $DocumentCopyWith<$Res> get document;
 }
 
 /// @nodoc
@@ -77,14 +79,22 @@ class _$DownloadEventCopyWithImpl<$Res, $Val extends DownloadEvent>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? document = freezed,
+    Object? document = null,
   }) {
     return _then(_value.copyWith(
-      document: freezed == document
+      document: null == document
           ? _value.document
           : document // ignore: cast_nullable_to_non_nullable
               as Document,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentCopyWith<$Res> get document {
+    return $DocumentCopyWith<$Res>(_value.document, (value) {
+      return _then(_value.copyWith(document: value) as $Val);
+    });
   }
 }
 
@@ -97,6 +107,9 @@ abstract class _$$_DownloadCopyWith<$Res>
   @override
   @useResult
   $Res call({Document document});
+
+  @override
+  $DocumentCopyWith<$Res> get document;
 }
 
 /// @nodoc
@@ -110,10 +123,10 @@ class __$$_DownloadCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? document = freezed,
+    Object? document = null,
   }) {
     return _then(_$_Download(
-      document: freezed == document
+      document: null == document
           ? _value.document
           : document // ignore: cast_nullable_to_non_nullable
               as Document,
@@ -139,12 +152,12 @@ class _$_Download implements _Download {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Download &&
-            const DeepCollectionEquality().equals(other.document, document));
+            (identical(other.document, document) ||
+                other.document == document));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(document));
+  int get hashCode => Object.hash(runtimeType, document);
 
   @JsonKey(ignore: true)
   @override
@@ -277,6 +290,8 @@ abstract class $DownloadStateCopyWith<$Res> {
   @useResult
   $Res call(
       {Document document, StreamController<double>? downloadProgressStream});
+
+  $DocumentCopyWith<$Res> get document;
 }
 
 /// @nodoc
@@ -292,11 +307,11 @@ class _$DownloadStateCopyWithImpl<$Res, $Val extends DownloadState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? document = freezed,
+    Object? document = null,
     Object? downloadProgressStream = freezed,
   }) {
     return _then(_value.copyWith(
-      document: freezed == document
+      document: null == document
           ? _value.document
           : document // ignore: cast_nullable_to_non_nullable
               as Document,
@@ -305,6 +320,14 @@ class _$DownloadStateCopyWithImpl<$Res, $Val extends DownloadState>
           : downloadProgressStream // ignore: cast_nullable_to_non_nullable
               as StreamController<double>?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DocumentCopyWith<$Res> get document {
+    return $DocumentCopyWith<$Res>(_value.document, (value) {
+      return _then(_value.copyWith(document: value) as $Val);
+    });
   }
 }
 
@@ -318,6 +341,9 @@ abstract class _$$_DocumentReadyCopyWith<$Res>
   @useResult
   $Res call(
       {Document document, StreamController<double>? downloadProgressStream});
+
+  @override
+  $DocumentCopyWith<$Res> get document;
 }
 
 /// @nodoc
@@ -331,11 +357,11 @@ class __$$_DocumentReadyCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? document = freezed,
+    Object? document = null,
     Object? downloadProgressStream = freezed,
   }) {
     return _then(_$_DocumentReady(
-      document: freezed == document
+      document: null == document
           ? _value.document
           : document // ignore: cast_nullable_to_non_nullable
               as Document,
@@ -367,14 +393,15 @@ class _$_DocumentReady implements _DocumentReady {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DocumentReady &&
-            const DeepCollectionEquality().equals(other.document, document) &&
+            (identical(other.document, document) ||
+                other.document == document) &&
             (identical(other.downloadProgressStream, downloadProgressStream) ||
                 other.downloadProgressStream == downloadProgressStream));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(document), downloadProgressStream);
+  int get hashCode =>
+      Object.hash(runtimeType, document, downloadProgressStream);
 
   @JsonKey(ignore: true)
   @override
