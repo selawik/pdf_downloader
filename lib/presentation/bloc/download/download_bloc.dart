@@ -7,11 +7,9 @@ import 'package:pdf_downloader/domain/model/document.dart';
 import 'package:pdf_downloader/domain/model/document_status.dart';
 import 'package:pdf_downloader/presentation/bloc/document/documents_bloc.dart';
 
-part 'download_event.dart';
-
-part 'download_state.dart';
-
 part 'download_bloc.freezed.dart';
+part 'download_event.dart';
+part 'download_state.dart';
 
 class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
   final IDocumentRepository _repository;
@@ -27,31 +25,35 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
     on<_Download>(_onDownload);
   }
 
-  void _onDownload(_Download event, Emitter emit) async {
-    var progressController = StreamController<double>.broadcast(
+  Future<void> _onDownload(_Download event, Emitter<DownloadState> emit) async {
+    final progressController = StreamController<double>.broadcast(
       onListen: () {},
       onCancel: () {},
     );
 
-    var newDocument = event.document.copyWith(status: DocumentStatus.loading);
+    final newDocument = event.document.copyWith(status: DocumentStatus.loading);
 
     emit(DownloadState.documentReady(
       document: newDocument,
       downloadProgressStream: progressController,
     ));
 
-    var filePath = await _repository.downloadDocument(
+    final filePath = await _repository.downloadDocument(
       url: event.document.url,
       progressStream: progressController,
     );
 
+    await progressController.close();
+
     if (filePath == null) {
-      var newDocument = event.document.copyWith(status: DocumentStatus.error);
+      final newDocument = event.document.copyWith(status: DocumentStatus.error);
 
       emit(DownloadState.documentReady(document: newDocument));
     } else {
-      var docWithFilePath = newDocument.copyWith(
-          status: DocumentStatus.loaded, filePath: filePath);
+      final docWithFilePath = newDocument.copyWith(
+        status: DocumentStatus.loaded,
+        filePath: filePath,
+      );
 
       _documentsBloc.add(DocumentsEvent.updateDocument(docWithFilePath));
 

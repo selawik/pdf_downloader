@@ -11,7 +11,7 @@ class DriftDocumentLocalDataSource implements IDocumentsLocalDataSource {
 
   @override
   Future<Iterable<Document>> loadDocument() async {
-    var documentsEntities = await _dbProvider.getDocuments();
+    final documentsEntities = await _dbProvider.getDocuments();
 
     return documentsEntities.map(
       (entity) => Document(
@@ -29,7 +29,7 @@ class DriftDocumentLocalDataSource implements IDocumentsLocalDataSource {
     required String name,
     required DocumentStatus status,
   }) async {
-    var savedDocument =
+    final savedDocument =
         await _dbProvider.saveDocument(url: url, name: name, status: status);
 
     return Document(
@@ -42,6 +42,6 @@ class DriftDocumentLocalDataSource implements IDocumentsLocalDataSource {
 
   @override
   Future<bool> updateDocument({required Document document}) async {
-    return await _dbProvider.updateDocument(document: document);
+    return _dbProvider.updateDocument(document: document);
   }
 }

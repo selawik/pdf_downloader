@@ -11,7 +11,7 @@ class DbProvider {
   }) : _db = db;
 
   Future<Iterable<DocumentDbEntity>> getDocuments() async {
-    return await _db.documentDao.getDocuments();
+    return _db.documentDao.getDocuments();
   }
 
   Future<DocumentDbEntity> saveDocument({
@@ -19,7 +19,7 @@ class DbProvider {
     required String name,
     required DocumentStatus status,
   }) async {
-    return await _db.documentDao.saveDocument(
+    return _db.documentDao.saveDocument(
       DocumentTableCompanion.insert(
         name: name,
         url: url,
@@ -31,7 +31,7 @@ class DbProvider {
   Future<bool> updateDocument({
     required Document document,
   }) async {
-    return await _db.documentDao.updateDocument(
+    return _db.documentDao.updateDocument(
       DocumentTableCompanion.insert(
         documentId: Value(document.documentId),
         name: document.name,

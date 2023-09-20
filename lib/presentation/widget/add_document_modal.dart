@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AddDocumentModal extends StatefulWidget {
-  const AddDocumentModal({Key? key}) : super(key: key);
+  const AddDocumentModal({super.key});
 
   @override
   State<AddDocumentModal> createState() => _AddDocumentModalState();
 }
 
 class _AddDocumentModalState extends State<AddDocumentModal> {
-  final GlobalKey<FormFieldState> fieldKey = GlobalKey();
+  final GlobalKey<FormFieldState<String>> fieldKey = GlobalKey();
 
   final TextEditingController urlController = TextEditingController();
 
@@ -21,7 +21,7 @@ class _AddDocumentModalState extends State<AddDocumentModal> {
   }
 
   Future<void> setUrlFromClipboard() async {
-    var result = await Clipboard.getData('text/plain');
+    final result = await Clipboard.getData('text/plain');
 
     if (result?.text != null && result!.text!.endsWith('.pdf')) {
       urlController.text = result.text!;
@@ -73,7 +73,7 @@ class _AddDocumentModalState extends State<AddDocumentModal> {
       return 'Введите url';
     }
 
-    var url = Uri.tryParse(value);
+    final url = Uri.tryParse(value);
 
     if (url == null ||
         !url.isAbsolute ||

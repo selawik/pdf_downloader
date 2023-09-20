@@ -8,7 +8,7 @@ import 'package:pdf_downloader/presentation/bloc/download/download_bloc.dart';
 import 'package:pdf_downloader/presentation/widget/download_progress_indicator.dart';
 
 class DocumentsView extends StatelessWidget {
-  const DocumentsView({Key? key}) : super(key: key);
+  const DocumentsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +41,9 @@ class DocumentsListView extends StatelessWidget {
   final List<Document> documents;
 
   const DocumentsListView({
-    Key? key,
     required this.documents,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class DocumentsListView extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 88, left: 16, right: 16),
       itemCount: documents.length,
       itemBuilder: (context, index) {
-        var item = documents[index];
+        final item = documents[index];
 
         return DocumentListItem(document: item);
       },
@@ -66,14 +66,14 @@ class DocumentListItem extends StatelessWidget {
   final Document document;
 
   const DocumentListItem({
-    Key? key,
     required this.document,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var repository = RepositoryProvider.of<DocumentRepositoryImpl>(context);
-    var documentBloc = BlocProvider.of<DocumentsBloc>(context);
+    final repository = RepositoryProvider.of<DocumentRepositoryImpl>(context);
+    final documentBloc = BlocProvider.of<DocumentsBloc>(context);
 
     return BlocProvider<DownloadBloc>(
       create: (context) => DownloadBloc(
@@ -84,7 +84,7 @@ class DocumentListItem extends StatelessWidget {
       child: BlocBuilder<DownloadBloc, DownloadState>(
         builder: (context, state) {
           return state.maybeWhen(
-            orElse: () => Container(),
+            orElse: Container.new,
             documentReady: (document, downloadProgressStream) {
               return Row(
                 children: [
@@ -101,7 +101,7 @@ class DocumentListItem extends StatelessWidget {
                           const DownloadProgressIndicator.notStarted()
                         else if (downloadProgressStream != null)
                           StreamBuilder<double>(
-                            builder: (context, AsyncSnapshot<double> snapshot) {
+                            builder: (context, snapshot) {
                               return DownloadProgressIndicator(
                                 value: snapshot.data ?? 0,
                               );

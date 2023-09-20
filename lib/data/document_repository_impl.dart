@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf_downloader/data/data_source/document_remote_data_source.dart';
@@ -23,7 +22,7 @@ class DocumentRepositoryImpl implements IDocumentRepository {
   Future<Iterable<Document>?> loadDocuments() async {
     try {
       return await _localDataSource.loadDocument();
-    } catch (exception, stacktrace) {
+    } on Exception catch (exception, stacktrace) {
       log(exception.toString(), stackTrace: stacktrace);
       return null;
     }
@@ -38,7 +37,7 @@ class DocumentRepositoryImpl implements IDocumentRepository {
     try {
       return await _localDataSource.saveDocument(
           url: url, name: name, status: status);
-    } catch (exception, stacktrace) {
+    } on Exception catch (exception, stacktrace) {
       log(exception.toString(), stackTrace: stacktrace);
       return null;
     }
@@ -50,7 +49,7 @@ class DocumentRepositoryImpl implements IDocumentRepository {
     required StreamController<double> progressStream,
   }) async {
     try {
-      var filePath = await _getFilePath();
+      final filePath = await _getFilePath();
 
       await _remoteDataSource.loadDocument(
         url: url,
@@ -59,18 +58,17 @@ class DocumentRepositoryImpl implements IDocumentRepository {
       );
 
       return filePath;
-    } catch (exception, stacktrace) {
+    } on Exception catch (exception, stacktrace) {
       log(exception.toString(), stackTrace: stacktrace);
       return null;
     }
   }
 
   Future<String> _getFilePath() async {
-    Directory appDocumentsDirectory =
-        await getApplicationDocumentsDirectory(); // 1
-    String appDocumentsPath = appDocumentsDirectory.path; // 2
-    String filePath =
-        '$appDocumentsPath/tickets/${DateTime.now().microsecondsSinceEpoch}'; // 3
+    final appDocumentsDirectory = await getApplicationDocumentsDirectory();
+    final appDocumentsPath = appDocumentsDirectory.path; // 2
+    final filePath =
+        '$appDocumentsPath/tickets/${DateTime.now().microsecondsSinceEpoch}';
 
     return filePath;
   }
@@ -79,7 +77,7 @@ class DocumentRepositoryImpl implements IDocumentRepository {
   Future<bool?> updateDocument({required Document document}) async {
     try {
       return await _localDataSource.updateDocument(document: document);
-    } catch (exception, stacktrace) {
+    } on Exception catch (exception, stacktrace) {
       log(exception.toString(), stackTrace: stacktrace);
       return null;
     }

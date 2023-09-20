@@ -22,7 +22,8 @@ class _HomePageState extends State<HomePage> {
       body: const DocumentsView(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          var url = await showModalBottomSheet<String>(
+          final documentsBloc = BlocProvider.of<DocumentsBloc>(context);
+          final url = await showModalBottomSheet<String>(
             context: context,
             builder: (context) {
               return const AddDocumentModal();
@@ -30,7 +31,7 @@ class _HomePageState extends State<HomePage> {
           );
 
           if (url != null) {
-            BlocProvider.of<DocumentsBloc>(context).add(DocumentsEvent.addDocument(url));
+            documentsBloc.add(DocumentsEvent.addDocument(url));
           }
         },
         label: const Text('Добавить'),

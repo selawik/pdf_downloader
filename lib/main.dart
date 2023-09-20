@@ -9,13 +9,14 @@ import 'package:pdf_downloader/data/data_source/http_document_remote_data_source
 import 'package:pdf_downloader/data/document_repository_impl.dart';
 
 void main() {
-  var repository = DocumentRepositoryImpl(
-      remoteDataSource: HttpDocumentRemoteDataSource(
-        dioClient: Dio(),
-      ),
-      localDataSource: DriftDocumentLocalDataSource(
-        dbProvider: DbProvider(db: Database()),
-      ));
+  final repository = DocumentRepositoryImpl(
+    remoteDataSource: HttpDocumentRemoteDataSource(
+      dioClient: Dio(),
+    ),
+    localDataSource: DriftDocumentLocalDataSource(
+      dbProvider: DbProvider(db: Database()),
+    ),
+  );
 
   runApp(
     RepositoryProvider.value(

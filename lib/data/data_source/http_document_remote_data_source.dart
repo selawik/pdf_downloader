@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:pdf_downloader/data/data_source/document_remote_data_source.dart';
 
@@ -15,7 +16,7 @@ class HttpDocumentRemoteDataSource implements IDocumentRemoteDataSource {
     required StreamController<double> progressStream,
   }) async {
     await _dioClient.download(url, filePath, onReceiveProgress: (count, total) {
-      progressStream.add(((count / total)));
+      progressStream.add(count / total);
     });
   }
 }

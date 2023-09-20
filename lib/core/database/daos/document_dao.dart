@@ -6,17 +6,17 @@ part 'document_dao.g.dart';
 
 @DriftAccessor(tables: [DocumentTable])
 class DocumentDao extends DatabaseAccessor<Database> with _$DocumentDaoMixin {
-  DocumentDao(Database db) : super(db);
+  DocumentDao(super.db);
 
   Future<DocumentDbEntity> saveDocument(DocumentTableCompanion document) async {
-    return await into(documentTable).insertReturning(document);
+    return into(documentTable).insertReturning(document);
   }
 
   Future<bool> updateDocument(DocumentTableCompanion document) async {
-    return await update(documentTable).replace(document);
+    return update(documentTable).replace(document);
   }
 
   Future<Iterable<DocumentDbEntity>> getDocuments() async {
-    return await select(documentTable).get();
+    return select(documentTable).get();
   }
 }

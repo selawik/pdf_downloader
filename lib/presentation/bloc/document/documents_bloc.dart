@@ -1,15 +1,12 @@
 import 'package:bloc/bloc.dart';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pdf_downloader/domain/document_repository.dart';
 import 'package:pdf_downloader/domain/model/document.dart';
 import 'package:pdf_downloader/domain/model/document_status.dart';
 
-part 'documents_event.dart';
-
-part 'documents_state.dart';
-
 part 'documents_bloc.freezed.dart';
+part 'documents_event.dart';
+part 'documents_state.dart';
 
 class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
   final IDocumentRepository _repository;
@@ -25,8 +22,9 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
     on<_UpdateDocument>(_onUpdateDocument);
   }
 
-  void _onAddDocument(_AddDocument event, Emitter emit) async {
-    var addedDocument = await _repository.saveDocument(
+  Future<void> _onAddDocument(
+      _AddDocument event, Emitter<DocumentsState> emit) async {
+    final addedDocument = await _repository.saveDocument(
       name: 'Ticket ${documents.length + 1}',
       url: event.url,
       status: DocumentStatus.waitLoading,
@@ -39,10 +37,11 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
     emit(DocumentsState.listIsReady(documents: documents));
   }
 
-  void _onLoadList(_LoadList event, Emitter emit) async {
+  Future<void> _onLoadList(
+      _LoadList event, Emitter<DocumentsState> emit) async {
     emit(const DocumentsState.isLoading());
 
-    var listResponse = await _repository.loadDocuments();
+    final listResponse = await _repository.loadDocuments();
 
     if (listResponse != null) {
       if (listResponse.isEmpty) {
@@ -55,14 +54,16 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
     }
   }
 
-  void _onUpdateDocument(_UpdateDocument event, Emitter emit) async {
-    var updateResult = await _repository.updateDocument(document: event.document);
+  Future<void> _onUpdateDocument(
+      _UpdateDocument event, Emitter<DocumentsState> emit) async {
+    final updateResult =
+        await _repository.updateDocument(document: event.document);
 
     if (updateResult == null) {
       return;
     }
 
-    var listResponse = await _repository.loadDocuments();
+    final listResponse = await _repository.loadDocuments();
 
     if (listResponse != null) {
       if (listResponse.isEmpty) {
@@ -73,6 +74,5 @@ class DocumentsBloc extends Bloc<DocumentsEvent, DocumentsState> {
       documents = listResponse.toList();
       emit(DocumentsState.listIsReady(documents: listResponse.toList()));
     }
-
   }
 }
